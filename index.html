@@ -9,6 +9,21 @@
 body{
   font-family:-apple-system;
   background:#f5f5f7;
+  margin:0;
+  padding:0;
+}
+
+.fixed{
+  position:sticky;
+  top:0;
+  background:#fff;
+  padding:12px;
+  font-weight:bold;
+  z-index:999;
+  border-bottom:1px solid #eee;
+}
+
+.container{
   padding:20px;
 }
 
@@ -72,6 +87,11 @@ button{
 
 <body>
 
+<!-- 固定表示 -->
+<div id="fixedBar" class="fixed hidden"></div>
+
+<div class="container">
+
 <!-- STEP1 -->
 <div id="step1" class="card">
 <h2>STEP1：サイズ選択</h2>
@@ -93,25 +113,19 @@ button{
 <div id="step2" class="card hidden">
 <h2>STEP2：研磨</h2>
 
-<div id="carExample" class="highlight"></div>
-
 <button onclick="selectPolish(41800)">Light（新車・1年未満向け）</button>
 <button onclick="selectPolish(52800)">Standard（バランス重視）</button>
 
 <button class="recommend" onclick="selectPolish(63800)">
 ⭐ Premium（おすすめ）
 </button>
-
 </div>
 
 <!-- STEP3 -->
 <div id="step3" class="card hidden">
 <h2>STEP3：コーティング</h2>
 
-<div id="carExample2" class="highlight"></div>
-
 <button onclick="selectCoat(16500)">Basic（コスト重視）</button>
-
 <button onclick="selectCoat(22000)">Standard（バランス）</button>
 
 <button class="recommend" onclick="selectCoat(27500)">
@@ -123,7 +137,6 @@ button{
 <button class="gold" onclick="selectCoat(200000)">
 🌟 G'ZOX ハイモース
 </button>
-
 </div>
 
 <!-- RESULT -->
@@ -132,48 +145,48 @@ button{
 <div id="price" class="result"></div>
 </div>
 
+</div>
+
 <script>
 
 let total = 0;
 let selectedPrice = 0;
 let carText = "";
 
-// サイズプレビュー（ここでは進まない）
+// サイズプレビュー
 function previewSize(price,type){
 
   selectedPrice = price;
 
   if(type == "s"){
-    carText = "対象目安：N-BOX・タント・ワゴンR";
+    carText = "対象：N-BOX・タント・ワゴンR";
   }
   if(type == "m"){
-    carText = "対象目安：プリウス・カローラ・ノート";
+    carText = "対象：プリウス・カローラ・ノート";
   }
   if(type == "l"){
-    carText = "対象目安：ハリアー・ヴォクシー・セレナ";
+    carText = "対象：ハリアー・ヴォクシー・セレナ";
   }
   if(type == "2l"){
-    carText = "対象目安：アルファード・ヴェルファイア・ハイエース・ランクル";
+    carText = "対象：アルファード・ヴェルファイア・ハイエース・ランクル";
   }
 
   document.getElementById("previewBox").innerText = carText;
   document.getElementById("previewBox").classList.remove("hidden");
   document.getElementById("confirmBtn").classList.remove("hidden");
 
-  // スマホでも確実に見える
-  document.getElementById("previewBox").scrollIntoView({ behavior: 'smooth' });
+  // 固定バー表示
+  let bar = document.getElementById("fixedBar");
+  bar.innerText = "選択サイズ：" + carText;
+  bar.classList.remove("hidden");
 }
 
-// サイズ確定（ここで初めて進む）
+// サイズ確定
 function confirmSize(){
   total += selectedPrice;
 
   document.getElementById("step1").classList.add("hidden");
   document.getElementById("step2").classList.remove("hidden");
-
-  document.getElementById("carExample").innerText = carText;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 研磨
@@ -183,9 +196,7 @@ function selectPolish(price){
   document.getElementById("step2").classList.add("hidden");
   document.getElementById("step3").classList.remove("hidden");
 
-  document.getElementById("carExample2").innerText = carText;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById("fixedBar").innerText += " / 研磨選択済み";
 }
 
 // コーティング
@@ -198,7 +209,7 @@ function selectCoat(price){
   document.getElementById("price").innerText =
     "合計金額：" + total.toLocaleString() + "円";
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById("fixedBar").innerText += " / コーティング選択済み";
 }
 
 </script>
