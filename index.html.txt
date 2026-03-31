@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コーティング見積もり</title>
+
+<style>
+body{
+  font-family:-apple-system;
+  background:#f5f5f7;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:16px;
+  margin-bottom:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+h2{
+  margin-bottom:10px;
+}
+
+.desc{
+  font-size:14px;
+  color:#666;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  margin:6px 0;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  background:#111;
+  color:#fff;
+}
+
+.gold{
+  background:linear-gradient(45deg,#c9a100,#ffd700);
+  color:#000;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+.result{
+  font-size:22px;
+  font-weight:bold;
+  text-align:center;
+}
+.hidden{
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 車種入力 -->
+<div class="card">
+<h2>車種を入力</h2>
+<div class="desc">例：プリウス・アルファードなど</div>
+<input type="text" id="car">
+<button onclick="autoSelect()">サイズ自動判定</button>
+</div>
+
+<!-- STEP1 -->
+<div id="step1" class="card">
+<h2>STEP1：サイズ選択</h2>
+<div class="desc">お車の大きさに応じて価格が変わります</div>
+<button onclick="selectSize(0)">S（軽）</button>
+<button onclick="selectSize(7700)">M（セダン）</button>
+<button onclick="selectSize(15400)">L（ミニバン）</button>
+<button onclick="selectSize(23100)">2L（大型）</button>
+</div>
+
+<!-- STEP2 -->
+<div id="step2" class="card hidden">
+<h2>STEP2：研磨</h2>
+<div class="desc">仕上がりの美しさはここで決まります</div>
+<button onclick="selectPolish(41800)">Light（軽研磨）</button>
+<button onclick="selectPolish(52800)">Standard（2工程）</button>
+<button onclick="selectPolish(63800)">Premium（3工程）</button>
+</div>
+
+<!-- STEP3 -->
+<div id="step3" class="card hidden">
+<h2>STEP3：コーティング</h2>
+<div class="desc">耐久性・艶・満足度で選択してください</div>
+
+<button onclick="selectCoat(16500)">Basic（ベーシック）</button>
+<button onclick="selectCoat(22000)">Standard（人気）</button>
+<button onclick="selectCoat(27500)">Premium（高耐久）</button>
+<button onclick="selectCoat(38000)">EX（上位モデル）</button>
+
+<button class="gold" onclick="selectCoat(200000)">
+🌟 Signature（ハイモース）
+</button>
+<div class="desc">圧倒的な艶と所有満足を求める方へ</div>
+
+</div>
+
+<!-- RESULT -->
+<div id="result" class="card hidden">
+<h2>お見積もり結果</h2>
+<div class="result" id="price"></div>
+<div class="desc" id="comment"></div>
+<button onclick="reserve()">この内容で予約する</button>
+</div>
+
+<script>
+
+let total = 0;
+
+// 車種自動判定
+function autoSelect(){
+  let car = document.getElementById("car").value;
+
+  if(car.includes("N-BOX") || car.includes("タント")){
+    selectSize(0);
+  }
+  else if(car.includes("プリウス") || car.includes("カローラ")){
+    selectSize(7700);
+  }
+  else if(car.includes("アルファード") || car.includes("ヴェルファイア")){
+    selectSize(15400);
+  }
+  else if(car.includes("ハイエース")){
+    selectSize(23100);
+  }
+  else{
+    alert("該当なし：サイズを手動で選択してください");
+  }
+}
+
+// サイズ
+function selectSize(price){
+  total += price;
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+}
+
+// 研磨
+function selectPolish(price){
+  total += price;
+  document.getElementById("step2").classList.add("hidden");
+  document.getElementById("step3").classList.remove("hidden");
+}
+
+// コーティング
+function selectCoat(price){
+  total += price;
+
+  document.getElementById("step3").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  document.getElementById("price").innerText =
+    "合計金額：" + total.toLocaleString() + "円";
+
+  let comment = "";
+
+  if(total < 90000){
+    comment = "コストを抑えたベーシックプランです";
+  }else if(total < 150000){
+    comment = "最も人気のあるバランスプランです";
+  }else{
+    comment = "最高クラスの仕上がりになります";
+  }
+
+  document.getElementById("comment").innerText = comment;
+}
+
+// 予約
+function reserve(){
+  alert("LINE予約に繋げてください");
+}
+
+</script>
+
+</body>
+</html>
