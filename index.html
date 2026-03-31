@@ -28,9 +28,10 @@ body{
 
 .highlight{
   background:#f0f0f0;
-  padding:8px;
-  border-radius:8px;
-  margin-bottom:10px;
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0;
+  font-weight:bold;
 }
 
 button{
@@ -44,13 +45,10 @@ button{
   color:#fff;
 }
 
-.recommend{
-  border:2px solid #c9a100;
-}
-
-.gold{
-  background:linear-gradient(45deg,#c9a100,#ffd700);
+.confirm{
+  background:#c9a100;
   color:#000;
+  font-weight:bold;
 }
 
 .hidden{ display:none; }
@@ -68,11 +66,18 @@ button{
 <!-- STEP1 -->
 <div id="step1" class="card">
 <h2>STEP1：サイズ選択</h2>
+<div class="desc">まずサイズを選択してください</div>
 
-<button onclick="selectSize(0,'s')">S（軽自動車）</button>
-<button onclick="selectSize(7700,'m')">M（小型普通車）</button>
-<button onclick="selectSize(15400,'l')">L（普通車・SUV・ミニバン）</button>
-<button onclick="selectSize(23100,'2l')">2L（大型）</button>
+<button onclick="previewSize(0,'s')">S（軽自動車）</button>
+<button onclick="previewSize(7700,'m')">M（小型普通車）</button>
+<button onclick="previewSize(15400,'l')">L（普通車・SUV・ミニバン）</button>
+<button onclick="previewSize(23100,'2l')">2L（大型）</button>
+
+<div id="previewBox" class="highlight hidden"></div>
+
+<button id="confirmBtn" class="confirm hidden" onclick="confirmSize()">
+このサイズで次へ
+</button>
 </div>
 
 <!-- STEP2 -->
@@ -81,26 +86,9 @@ button{
 
 <div id="carExample" class="highlight"></div>
 
-<button onclick="toggle('p1')">Light ▼</button>
-<div id="p1" class="desc hidden">
-新車・納車から1年未満におすすめ<br>
-<button onclick="selectPolish(41800)">この内容で選択</button>
-</div>
-
-<button onclick="toggle('p2')">Standard ▼</button>
-<div id="p2" class="desc hidden">
-小傷やくすみをバランスよく除去<br>
-<button onclick="selectPolish(52800)">この内容で選択</button>
-</div>
-
-<button class="recommend" onclick="toggle('p3')">
-⭐ Premium（おすすめ）▼
-</button>
-<div id="p3" class="desc">
-高い艶と仕上がりを重視<br>
-<button onclick="selectPolish(63800)">この内容で選択</button>
-</div>
-
+<button onclick="selectPolish(41800)">Light</button>
+<button onclick="selectPolish(52800)">Standard</button>
+<button onclick="selectPolish(63800)">⭐ Premium（おすすめ）</button>
 </div>
 
 <!-- STEP3 -->
@@ -110,65 +98,59 @@ button{
 <div id="carExample2" class="highlight"></div>
 
 <button onclick="selectCoat(16500)">Basic</button>
-<div class="desc">コスト重視・撥水付与</div>
-
 <button onclick="selectCoat(22000)">Standard</button>
-<div class="desc">バランス重視</div>
-
-<button class="recommend" onclick="selectCoat(27500)">
-⭐ Premium（おすすめ）
-</button>
-<div class="desc">艶・耐久重視</div>
-
+<button onclick="selectCoat(27500)">⭐ Premium</button>
 <button onclick="selectCoat(38000)">EX</button>
-<div class="desc">さらに上の仕上がり</div>
-
-<button class="gold" onclick="selectCoat(200000)">
-🌟 G'ZOX ハイモース
-</button>
-<div class="desc">完全別格の仕上がり</div>
-
+<button onclick="selectCoat(200000)">🌟 G'ZOX ハイモース</button>
 </div>
 
 <!-- RESULT -->
 <div id="result" class="card hidden">
 <h2>お見積もり</h2>
-<div class="result" id="price"></div>
-<div id="comment" class="desc"></div>
+<div id="price" class="result"></div>
 </div>
 
 <script>
 
 let total = 0;
+let selectedPrice = 0;
 let carText = "";
 
-// サイズ選択（←ここに統合）
-function selectSize(price,type){
-  total += price;
+// プレビュー表示
+function previewSize(price,type){
+
+  selectedPrice = price;
 
   if(type == "s"){
-    carText = "対象目安：N-BOX・タント・ワゴンR";
+    carText = "対象：N-BOX・タント・ワゴンR";
   }
   if(type == "m"){
-    carText = "対象目安：プリウス・カローラ・ノート";
+    carText = "対象：プリウス・カローラ・ノート";
   }
   if(type == "l"){
-    carText = "対象目安：ハリアー・ヴォクシー・セレナ";
+    carText = "対象：ハリアー・ヴォクシー・セレナ";
   }
   if(type == "2l"){
-    carText = "対象目安：アルファード・ヴェルファイア・ハイエース・ランクル";
+    carText = "対象：アルファード・ヴェルファイア・ハイエース・ランクル";
   }
 
-  document.getElementById("carExample").innerText = carText;
+  document.getElementById("previewBox").innerText = carText;
+  document.getElementById("previewBox").classList.remove("hidden");
+  document.getElementById("confirmBtn").classList.remove("hidden");
+
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+// 確定
+function confirmSize(){
+  total += selectedPrice;
 
   document.getElementById("step1").classList.add("hidden");
   document.getElementById("step2").classList.remove("hidden");
-}
 
-// 開閉
-function toggle(id){
-  let el = document.getElementById(id);
-  el.classList.toggle("hidden");
+  document.getElementById("carExample").innerText = carText;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 研磨
@@ -179,6 +161,8 @@ function selectPolish(price){
   document.getElementById("step3").classList.remove("hidden");
 
   document.getElementById("carExample2").innerText = carText;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // コーティング
@@ -191,17 +175,7 @@ function selectCoat(price){
   document.getElementById("price").innerText =
     "合計金額：" + total.toLocaleString() + "円";
 
-  let comment = "";
-
-  if(total < 90000){
-    comment = "コストを抑えたプランです";
-  }else if(total < 150000){
-    comment = "人気のおすすめプランです";
-  }else{
-    comment = "最高クラスの仕上がりです";
-  }
-
-  document.getElementById("comment").innerText = comment;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 </script>
