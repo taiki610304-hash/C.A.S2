@@ -3,142 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C.A.S2 - 見積もりシミュレーター</title>
+    <title>C.A.S2 - 高機能見積もりシミュレーター</title>
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; }
-        body { font-family: sans-serif; background: var(--bg); padding: 20px; line-height: 1.5; }
-        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        :root { --primary: #2563eb; --bg: #f8fafc; --accent: #f59e0b; }
+        body { font-family: sans-serif; background: var(--bg); padding: 15px; color: #333; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .step { display: none; }
         .step.active { display: block; }
-        .option-card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; position: relative; }
-        .option-card.selected { border-color: var(--primary); background: #f0f7ff; }
-        .spec { font-size: 0.85em; color: #666; margin-top: 4px; }
-        .price { font-weight: bold; color: var(--primary); }
-        .footer-total { position: sticky; bottom: 0; background: #333; color: white; padding: 15px; margin-top: 20px; border-radius: 8px; text-align: center; }
-        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
-        button { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .option-card { border: 2px solid #e2e8f0; border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
+        .option-card:hover { border-color: var(--primary); }
+        .option-card.selected { border-color: var(--primary); background: #eff6ff; box-shadow: inset 0 0 0 1px var(--primary); }
+        .spec-list { font-size: 0.85em; color: #64748b; margin-top: 8px; padding-left: 0; list-style: none; }
+        .spec-list li { margin-bottom: 3px; }
+        .price-tag { float: right; font-weight: bold; color: var(--primary); font-size: 1.1em; }
+        .footer-total { position: sticky; bottom: 10px; background: #1e293b; color: white; padding: 18px; border-radius: 12px; text-align: center; font-size: 1.2em; font-weight: bold; z-index: 100; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        button { flex: 1; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1em; }
         .btn-next { background: var(--primary); color: white; }
-        .btn-prev { background: #eee; }
-        .special-card { background: #1a1a1a; color: white; border: none; }
+        .btn-prev { background: #e2e8f0; color: #475569; }
+        .premium-label { color: var(--accent); font-weight: bold; margin-bottom: 5px; display: block; }
+        .high-mohs { background: #0f172a; color: white; border: none; }
+        .high-mohs .spec-list { color: #94a3b8; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <h2 style="text-align:center; margin-bottom:25px;">COATING ESTIMATE</h2>
+
     <div class="step active" id="step1">
-        <h3>STEP 1: 車種サイズ</h3>
+        <h4 style="margin-top:0;">1. 車種サイズを選択</h4>
         <div class="option-card" onclick="select('size', 'S', 0)">
-            <strong>S（軽）</strong>
-            <div class="spec">例：N-BOX、ムーヴ、ワゴンR等</div>
+            <strong>S（軽自動車）</strong>
+            <div class="spec-list">例：N-BOX、タント、ルークス、ハスラー等</div>
         </div>
         <div class="option-card" onclick="select('size', 'M', 0)">
-            <strong>M（小型）</strong>
-            <div class="spec">例：ヤリス、アクア、ルーミー等</div>
+            <strong>M（小型・コンパクト）</strong>
+            <div class="spec-list">例：ヤリス、アクア、ノート、ルーミー等</div>
         </div>
         <div class="option-card" onclick="select('size', 'L', 0)">
-            <strong>L（普通車）</strong>
-            <div class="spec">例：プリウス、CX-5、ノア等</div>
+            <strong>L（普通車・セダン）</strong>
+            <div class="spec-list">例：プリウス、カローラ、CX-5、ハリアー等</div>
         </div>
         <div class="option-card" onclick="select('size', '2L', 0)">
-            <strong>2L（大型）</strong>
-            <div class="spec">例：アルファード、ランドクルーザー等</div>
+            <strong>2L（大型・ミニバン）</strong>
+            <div class="spec-list">例：アルファード、ヴェルファイア、ランクル等</div>
         </div>
-        <button class="btn-next" onclick="move(2)">次へ</button>
+        <button class="btn-next" onclick="move(2)">次へ進む</button>
     </div>
 
     <div class="step" id="step2">
-        <h3>STEP 2: 研磨を選択</h3>
+        <h4 style="margin-top:0;">2. 下地研磨（磨き）を選択</h4>
         <div class="option-card" onclick="select('polish', 'Light', 0)">
+            <span class="price-tag">¥0</span>
             <strong>Light（1行程）</strong>
-            <div class="spec">新車・軽度の方に</div>
+            <ul class="spec-list">
+                <li>・新車や納車直後の方に最適</li>
+                <li>・表面の油分を除去し、定着を良くします</li>
+            </ul>
         </div>
-        <div class="option-card" onclick="select('polish', 'Standard', 0)">
+        <div class="option-card" onclick="select('polish', 'Standard', 11000)">
+            <span class="price-tag">+¥11,000</span>
             <strong>Standard（2行程）</strong>
-            <div class="spec">バランス重視の方に</div>
+            <ul class="spec-list">
+                <li>・経年車や中古車を購入された方に</li>
+                <li>・洗車キズやくすみを除去し、本来の艶を復元</li>
+            </ul>
         </div>
-        <div class="option-card" onclick="select('polish', 'Premium', 0)">
-            <strong>⭐ Premium（3行程）</strong>
-            <div class="spec">艶を最大限に引き出したい方に</div>
+        <div class="option-card" onclick="select('polish', 'Premium', 22000)">
+            <span class="price-tag">+¥22,000</span>
+            <span class="premium-label">⭐ おすすめ</span>
+            <strong>Premium（3行程）</strong>
+            <ul class="spec-list">
+                <li>・展示車のような鏡面仕上げを求める方に</li>
+                <li>・深い傷以外を徹底的に除去し、極限の艶へ</li>
+            </ul>
         </div>
         <div class="btn-group">
             <button class="btn-prev" onclick="move(1)">戻る</button>
-            <button class="btn-next" onclick="move(3)">次へ</button>
+            <button class="btn-next" onclick="move(3)">次へ進む</button>
         </div>
     </div>
 
     <div class="step" id="step3">
-        <h3>STEP 3: コーティング剤</h3>
+        <h4 style="margin-top:0;">3. コーティングプランを選択</h4>
+        
         <div class="option-card" onclick="select('coat', 'Basic', 16500)">
-            <span class="price">¥16,500</span>
+            <span class="price-tag">¥16,500</span>
             <strong>Basic</strong>
+            <ul class="spec-list">
+                <li>【持続】約1年 / 【撥水】高撥水</li>
+                <li>・手軽にプロの輝きを手に入れたい方へ</li>
+            </ul>
         </div>
+
         <div class="option-card" onclick="select('coat', 'Standard', 22000)">
-            <span class="price">¥22,000</span>
+            <span class="price-tag">¥22,000</span>
             <strong>Standard</strong>
+            <ul class="spec-list">
+                <li>【持続】約2年 / 【撥水】超撥水</li>
+                <li>・防汚性能が高く、日頃のお手入れが楽になります</li>
+            </ul>
         </div>
+
         <div class="option-card" onclick="select('coat', 'Premium', 27500)">
-            <span class="price">¥27,500</span>
-            <strong>⭐ Premium</strong>
+            <span class="price-tag">¥27,500</span>
+            <span class="premium-label">⭐ 人気No.1</span>
+            <strong>Premium</strong>
+            <ul class="spec-list">
+                <li>【持続】約3年 / 【撥水】強滑水</li>
+                <li>・厚い被膜で深い艶を実現。雨ジミもつきにくい</li>
+            </ul>
         </div>
+
         <div class="option-card" onclick="select('coat', 'EX', 38000)">
-            <span class="price">¥38,000</span>
+            <span class="price-tag">¥38,000</span>
             <strong>EX</strong>
+            <ul class="spec-list">
+                <li>【持続】約5年 / 【性能】自己修復機能・最高耐候性</li>
+                <li>・究極の保護性能。長期間愛車を美しく保ちます</li>
+            </ul>
         </div>
-        <hr>
-        <div class="option-card special-card" onclick="select('coat', 'G\'ZOX ハイモース', 140000)">
-            <span class="price" style="color:#ffd700">¥140,000</span>
+
+        <div class="option-card high-mohs" onclick="select('coat', 'G\'ZOX ハイモース', 140000)">
+            <span class="price-tag" style="color:#fbbf24">¥140,000</span>
             <strong>🌟 G'ZOX ハイモース</strong>
-            <div class="spec" style="color:#ccc">圧倒的な艶・深み・存在感</div>
+            <ul class="spec-list">
+                <li>【持続】5年以上 / 【性能】モース硬度8の超硬度被膜</li>
+                <li>・最高峰の艶と撥水。異次元の存在感を与えます</li>
+            </ul>
         </div>
+
         <div class="btn-group">
             <button class="btn-prev" onclick="move(2)">戻る</button>
-            <button class="btn-next" onclick="show()" style="background:#059669">確定</button>
+            <button class="btn-next" onclick="showResult()" style="background:#059669">見積もりを確定する</button>
         </div>
     </div>
 
     <div class="step" id="stepResult">
-        <h3>お見積もり完了</h3>
-        <div id="summary" style="background:#f1f5f9; padding:15px; border-radius:8px;"></div>
-        <button class="btn-next" style="width:100%; margin-top:20px; background:#06c755" onclick="alert('LINE連携へ')">LINEで予約・相談する</button>
-        <button class="btn-prev" style="width:100%; margin-top:10px;" onclick="move(3)">選び直す</button>
+        <h4 style="margin-top:0;">お見積もり内容</h4>
+        <div id="summary" style="background:#f1f5f9; padding:20px; border-radius:10px; margin-bottom:20px; line-height:1.8;"></div>
+        <button class="btn-next" style="width:100%; background:#06c755; font-size:1.1em;" onclick="alert('LINE起動')">LINEでこの内容を送信・予約</button>
+        <button class="btn-prev" style="width:100%; margin-top:10px;" onclick="move(3)">プランを選び直す</button>
     </div>
 
     <div class="footer-total">
-        合計: ¥<span id="total">0</span>
+        現在の合計: ¥<span id="totalDisplay">0</span>
     </div>
 </div>
 
 <script>
-    let data = { 
-        size: {n:'', p:0}, 
-        polish: {n:'', p:0}, 
-        coat: {n:'', p:0} 
+    // 選択データを保持するオブジェクト
+    let selections = {
+        size: { name: '未選択', price: 0 },
+        polish: { name: '未選択', price: 0 },
+        coat: { name: '未選択', price: 0 }
     };
 
-    function select(cat, name, price) {
-        data[cat] = {n: name, p: price};
-        const cards = event.currentTarget.parentElement.querySelectorAll('.option-card');
-        cards.forEach(c => c.classList.remove('selected'));
+    function select(category, name, price) {
+        // データの更新
+        selections[category].name = name;
+        selections[category].price = price;
+
+        // UIの選択表示を切り替え
+        const stepElement = event.currentTarget.parentElement;
+        stepElement.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
         event.currentTarget.classList.add('selected');
-        document.getElementById('total').innerText = (data.size.p + data.polish.p + data.coat.p).toLocaleString();
+
+        // 合計金額の更新
+        updateTotal();
     }
 
-    function move(s) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step' + s).classList.add('active');
+    function updateTotal() {
+        const total = selections.size.price + selections.polish.price + selections.coat.price;
+        document.getElementById('totalDisplay').innerText = total.toLocaleString();
     }
 
-    function show() {
+    function move(stepNumber) {
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step' + stepNumber).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function showResult() {
+        if(selections.coat.name === '未選択') {
+            alert('コーティングプランを選択してください');
+            return;
+        }
         move('Result');
-        const total = data.size.p + data.polish.p + data.coat.p;
+        const total = selections.size.price + selections.polish.price + selections.coat.price;
         document.getElementById('summary').innerHTML = `
-            <p>サイズ: ${data.size.n}</p>
-            <p>研磨: ${data.polish.n}</p>
-            <p>プラン: ${data.coat.n}</p>
-            <hr>
-            <p style="font-size:1.2em; text-align:center;"><strong>合計: ¥${total.toLocaleString()}</strong></p>
+            <strong>■車種サイズ:</strong> ${selections.size.name}<br>
+            <strong>■下地処理:</strong> ${selections.polish.name} (+¥${selections.polish.price.toLocaleString()})<br>
+            <strong>■施工プラン:</strong> ${selections.coat.name}<br>
+            <hr style="border:none; border-top:1px solid #cbd5e1; margin:15px 0;">
+            <div style="text-align:center;">
+                <span style="font-size:0.9em; color:#64748b;">税込合計</span><br>
+                <span style="font-size:1.8em; color:#2563eb; font-weight:bold;">¥${total.toLocaleString()}</span>
+            </div>
         `;
     }
 </script>
+
 </body>
 </html>
