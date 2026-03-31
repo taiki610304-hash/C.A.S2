@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コーティング見積もり</title>
+<style>
+body { font-family: sans-serif; padding: 20px; }
+h2 { margin-bottom: 10px; }
+button {
+  width: 100%; padding: 15px; margin: 5px 0;
+  font-size: 16px; border: none; border-radius: 8px;
+  background: #111; color: #fff;
+}
+.result { font-size: 20px; margin-top: 20px; }
+.hidden { display: none; }
+</style>
+</head>
+
+<body>
+
+<div id="step1">
+<h2>STEP1：サイズ選択</h2>
+<button onclick="selectSize(0)">S</button>
+<button onclick="selectSize(5000)">M</button>
+<button onclick="selectSize(10000)">L</button>
+<button onclick="selectSize(15000)">2L</button>
+</div>
+
+<div id="step2" class="hidden">
+<h2>STEP2：研磨</h2>
+<button onclick="selectPolish(40000)">Light</button>
+<button onclick="selectPolish(50000)">Standard</button>
+<button onclick="selectPolish(60000)">Premium</button>
+</div>
+
+<div id="step3" class="hidden">
+<h2>STEP3：コーティング</h2>
+<button onclick="selectCoat(15000)">Basic</button>
+<button onclick="selectCoat(20000)">Standard</button>
+<button onclick="selectCoat(30000)">Premium</button>
+<button onclick="selectCoat(45000)">EX</button>
+<button onclick="selectCoat(200000)">Signature（ハイモース）</button>
+</div>
+
+<div id="result" class="hidden">
+<h2>お見積もり結果</h2>
+<div class="result" id="price"></div>
+<button onclick="reserve()">この内容で予約する</button>
+</div>
+
+<script>
+let total = 0;
+
+function selectSize(price){
+  total += price;
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
+}
+
+function selectPolish(price){
+  total += price;
+  document.getElementById("step2").classList.add("hidden");
+  document.getElementById("step3").classList.remove("hidden");
+}
+
+function selectCoat(price){
+  total += price;
+  document.getElementById("step3").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("price").innerText = "合計金額：" + total.toLocaleString() + "円";
+}
+
+function reserve(){
+  alert("LINE予約に繋げます（後で設定）");
+}
+</script>
+
+</body>
+</html>
+
