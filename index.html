@@ -7,37 +7,16 @@
 
 <style>
 body{font-family:-apple-system;background:#f5f5f7;margin:0;}
-
-.fixed{
- position:sticky;top:0;background:#fff;padding:12px;
- border-bottom:1px solid #eee;font-size:14px;z-index:999;
-}
-
+.fixed{position:sticky;top:0;background:#fff;padding:12px;border-bottom:1px solid #eee;font-size:14px;z-index:999;}
 .container{padding:20px;}
-
-.card{
- background:#fff;padding:20px;border-radius:16px;margin-bottom:20px;
-}
-
-button{
- width:100%;padding:15px;margin:6px 0;border:none;
- border-radius:10px;background:#111;color:#fff;font-size:15px;
-}
-
-.confirm{background:#c9a100;color:#000;font-weight:bold;}
+.card{background:#fff;padding:20px;border-radius:16px;margin-bottom:20px;}
+button{width:100%;padding:15px;margin:6px 0;border:none;border-radius:10px;background:#111;color:#fff;}
+.confirm{background:#c9a100;color:#000;}
 .recommend{border:2px solid #c9a100;}
 .gold{background:linear-gradient(45deg,#c9a100,#ffd700);color:#000;}
-
-.preview{
- background:#f0f0f0;padding:10px;border-radius:10px;margin:10px 0;
- font-weight:bold;
-}
-
+.preview{background:#f0f0f0;padding:10px;border-radius:10px;margin:10px 0;font-weight:bold;}
 .hidden{display:none;}
-
-.result{
- font-size:22px;font-weight:bold;text-align:center;
-}
+.result{font-size:22px;font-weight:bold;text-align:center;}
 </style>
 </head>
 
@@ -51,10 +30,10 @@ button{
 <div id="step1" class="card">
 <h2>STEP1：サイズ</h2>
 
-<button onclick="previewSize(0,'s')">S（軽）</button>
-<button onclick="previewSize(7700,'m')">M（小型）</button>
-<button onclick="previewSize(15400,'l')">L（普通車）</button>
-<button onclick="previewSize(23100,'2l')">2L（大型）</button>
+<button onclick="previewSize('s')">S（軽）</button>
+<button onclick="previewSize('m')">M（小型）</button>
+<button onclick="previewSize('l')">L（普通車）</button>
+<button onclick="previewSize('2l')">2L（大型）</button>
 
 <div id="sizePreview" class="preview hidden"></div>
 <button id="sizeBtn" class="confirm hidden" onclick="confirmSize()">次へ</button>
@@ -64,16 +43,16 @@ button{
 <div id="step2" class="card hidden">
 <h2>STEP2：研磨</h2>
 
-<button onclick="previewPolish(41800,'light')">
-Light<br><small>新車・1年未満</small><br>¥41,800
+<button onclick="previewPolish('light')">
+Light（1行程）<br><small>新車・軽度向け</small>
 </button>
 
-<button onclick="previewPolish(52800,'standard')">
-Standard<br><small>バランス</small><br>¥52,800
+<button onclick="previewPolish('standard')">
+Standard（2行程）<br><small>バランス重視</small>
 </button>
 
-<button class="recommend" onclick="previewPolish(63800,'premium')">
-⭐ Premium<br><small>艶重視</small><br>¥63,800
+<button class="recommend" onclick="previewPolish('premium')">
+⭐ Premium（3行程）<br><small>艶・仕上がり重視</small>
 </button>
 
 <div id="polishPreview" class="preview hidden"></div>
@@ -84,24 +63,17 @@ Standard<br><small>バランス</small><br>¥52,800
 <div id="step3" class="card hidden">
 <h2>STEP3：コーティング</h2>
 
-<button onclick="previewCoat(16500,'basic')">
-Basic<br><small>コスト重視</small><br>¥16,500
+<button onclick="previewCoat(16500,'Basic')">Basic ¥16,500</button>
+<button onclick="previewCoat(22000,'Standard')">Standard ¥22,000</button>
+
+<button class="recommend" onclick="previewCoat(27500,'Premium')">
+⭐ Premium ¥27,500
 </button>
 
-<button onclick="previewCoat(22000,'standard')">
-Standard<br><small>バランス</small><br>¥22,000
-</button>
+<button onclick="previewCoat(38000,'EX')">EX ¥38,000</button>
 
-<button class="recommend" onclick="previewCoat(27500,'premium')">
-⭐ Premium<br><small>艶・耐久</small><br>¥27,500
-</button>
-
-<button onclick="previewCoat(38000,'ex')">
-EX<br><small>高性能</small><br>¥38,000
-</button>
-
-<button class="gold" onclick="previewCoat(200000,'hi')">
-🌟 G'ZOX ハイモース<br><small>別格</small><br>¥200,000
+<button class="gold" onclick="previewCoat(140000,'G\'ZOX ハイモース')">
+🌟 G'ZOX ハイモース ¥140,000
 </button>
 
 <div id="coatPreview" class="preview hidden"></div>
@@ -119,20 +91,15 @@ EX<br><small>高性能</small><br>¥38,000
 <script>
 
 let total=0;
-let tmpPrice=0;
 
+let sizeType="";
 let sizeText="";
-let polishText="";
-let coatText="";
-
-let sizePrice=0;
 let polishPrice=0;
 let coatPrice=0;
 
 // サイズ
-function previewSize(p,t){
- tmpPrice=p;
- sizePrice=p;
+function previewSize(t){
+ sizeType=t;
 
  if(t=="s") sizeText="軽（N-BOX等）";
  if(t=="m") sizeText="小型（プリウス等）";
@@ -147,19 +114,46 @@ function previewSize(p,t){
 }
 
 function confirmSize(){
- total+=sizePrice;
  next("step1","step2");
 }
 
+// 研磨価格（サイズ連動）
+function getPolishPrice(type){
+ if(sizeType=="s"){
+   if(type=="light") return 41800;
+   if(type=="standard") return 52800;
+   if(type=="premium") return 63800;
+ }
+ if(sizeType=="m"){
+   if(type=="light") return 49500;
+   if(type=="standard") return 60500;
+   if(type=="premium") return 71500;
+ }
+ if(sizeType=="l"){
+   if(type=="light") return 57200;
+   if(type=="standard") return 68200;
+   if(type=="premium") return 79200;
+ }
+ if(sizeType=="2l"){
+   if(type=="light") return 64900;
+   if(type=="standard") return 75900;
+   if(type=="premium") return 86900;
+ }
+}
+
 // 研磨
-function previewPolish(p,t){
- polishPrice=p;
+function previewPolish(type){
 
- if(t=="light") polishText="Light";
- if(t=="standard") polishText="Standard";
- if(t=="premium") polishText="Premium";
+ polishPrice = getPolishPrice(type);
 
- document.getElementById("polishPreview").innerText=polishText+"：¥"+p.toLocaleString();
+ let text="";
+ if(type=="light") text="1行程（軽研磨）";
+ if(type=="standard") text="2行程（中研磨）";
+ if(type=="premium") text="3行程（仕上げ研磨）";
+
+ document.getElementById("polishPreview").innerText=
+ text+"：¥"+polishPrice.toLocaleString();
+
  document.getElementById("polishPreview").classList.remove("hidden");
  document.getElementById("polishBtn").classList.remove("hidden");
 
@@ -172,16 +166,12 @@ function confirmPolish(){
 }
 
 // コーティング
-function previewCoat(p,t){
- coatPrice=p;
+function previewCoat(price,name){
+ coatPrice=price;
 
- if(t=="basic") coatText="Basic";
- if(t=="standard") coatText="Standard";
- if(t=="premium") coatText="Premium";
- if(t=="ex") coatText="EX";
- if(t=="hi") coatText="G'ZOX ハイモース";
+ document.getElementById("coatPreview").innerText=
+ name+"：¥"+price.toLocaleString();
 
- document.getElementById("coatPreview").innerText=coatText+"：¥"+p.toLocaleString();
  document.getElementById("coatPreview").classList.remove("hidden");
  document.getElementById("coatBtn").classList.remove("hidden");
 
@@ -191,7 +181,9 @@ function previewCoat(p,t){
 function confirmCoat(){
  total+=coatPrice;
  next("step3","result");
- document.getElementById("price").innerText="合計："+total.toLocaleString()+"円";
+
+ document.getElementById("price").innerText=
+ "合計："+total.toLocaleString()+"円";
 }
 
 // 共通
@@ -200,16 +192,15 @@ function next(a,b){
  document.getElementById(b).classList.remove("hidden");
 }
 
-// 上部バー
+// 上部表示
 function updateBar(){
- let sum = sizePrice + polishPrice + coatPrice;
+ let sum = polishPrice + coatPrice;
 
- let text = "";
- if(sizeText) text += sizeText;
- if(polishText) text += " / " + polishText;
- if(coatText) text += " / " + coatText;
+ let text = sizeText;
+ if(polishPrice) text += " / 研磨";
+ if(coatPrice) text += " / コーティング";
 
- text += " ｜ 合計：約" + sum.toLocaleString() + "円";
+ if(sum>0) text += " ｜ 約"+sum.toLocaleString()+"円";
 
  let bar=document.getElementById("fixedBar");
  bar.innerText=text;
