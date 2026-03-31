@@ -20,14 +20,12 @@ body{
   box-shadow:0 4px 10px rgba(0,0,0,0.05);
 }
 
-h2{
-  margin-bottom:10px;
-}
+h2{ margin-bottom:10px; }
 
 .desc{
   font-size:14px;
   color:#666;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 
 button{
@@ -58,8 +56,19 @@ input{
   font-weight:bold;
   text-align:center;
 }
-.hidden{
-  display:none;
+
+.hidden{ display:none; }
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+th,td{
+  border-bottom:1px solid #eee;
+  padding:8px;
+  text-align:center;
 }
 </style>
 </head>
@@ -88,25 +97,61 @@ input{
 <div id="step2" class="card hidden">
 <h2>STEP2：研磨</h2>
 <div class="desc">仕上がりの美しさはここで決まります</div>
-<button onclick="selectPolish(41800)">Light（軽研磨）</button>
-<button onclick="selectPolish(52800)">Standard（2工程）</button>
-<button onclick="selectPolish(63800)">Premium（3工程）</button>
+
+<button onclick="toggle('p1')">Light（軽研磨）</button>
+<div id="p1" class="desc hidden">
+洗車・スケール除去・鉄粉除去＋軽研磨<br>軽度のくすみ改善
+</div>
+<button onclick="selectPolish(41800)">この内容で選択</button>
+
+<button onclick="toggle('p2')">Standard（2工程）</button>
+<div id="p2" class="desc hidden">
+2工程研磨で小傷・くすみを除去
+</div>
+<button onclick="selectPolish(52800)">この内容で選択</button>
+
+<button onclick="toggle('p3')">Premium（3工程）</button>
+<div id="p3" class="desc hidden">
+3工程研磨で新車以上の艶へ
+</div>
+<button onclick="selectPolish(63800)">この内容で選択</button>
+
 </div>
 
 <!-- STEP3 -->
 <div id="step3" class="card hidden">
 <h2>STEP3：コーティング</h2>
-<div class="desc">耐久性・艶・満足度で選択してください</div>
+<div class="desc">ご予算や仕上がりに合わせてお選びください</div>
 
-<button onclick="selectCoat(16500)">Basic（ベーシック）</button>
-<button onclick="selectCoat(22000)">Standard（人気）</button>
-<button onclick="selectCoat(27500)">Premium（高耐久）</button>
-<button onclick="selectCoat(38000)">EX（上位モデル）</button>
+<button onclick="selectCoat(16500)">Basic</button>
+<div class="desc">手軽に綺麗を維持したい方向け</div>
+
+<button onclick="selectCoat(22000)">Standard</button>
+<div class="desc">バランスの良い人気プラン</div>
+
+<button onclick="selectCoat(27500)">Premium</button>
+<div class="desc">艶・耐久を重視する方向け</div>
+
+<button onclick="selectCoat(38000)">EX</button>
+<div class="desc">ワンランク上の仕上がり</div>
 
 <button class="gold" onclick="selectCoat(200000)">
 🌟 Signature（ハイモース）
 </button>
-<div class="desc">圧倒的な艶と所有満足を求める方へ</div>
+<div class="desc">圧倒的な艶と所有満足</div>
+
+<!-- 比較表 -->
+<div class="desc">
+すべてのプランで十分な性能があります。用途に応じてお選びください。
+</div>
+
+<table>
+<tr><th>プラン</th><th>特徴</th><th>おすすめ</th></tr>
+<tr><td>Basic</td><td>手軽に綺麗</td><td>コスパ重視</td></tr>
+<tr><td>Premium</td><td>艶と耐久</td><td>長く乗る方</td></tr>
+<tr><td>EX</td><td>高い艶と防汚</td><td>仕上がり重視</td></tr>
+<tr><td>ハイモース</td><td>別格の仕上がり</td><td>最高品質</td></tr>
+</table>
 
 </div>
 
@@ -122,42 +167,42 @@ input{
 
 let total = 0;
 
-// 車種自動判定
+// 車種判定
 function autoSelect(){
   let car = document.getElementById("car").value;
 
   if(car.includes("N-BOX") || car.includes("タント")){
     selectSize(0);
-  }
-  else if(car.includes("プリウス") || car.includes("カローラ")){
+  }else if(car.includes("プリウス") || car.includes("カローラ")){
     selectSize(7700);
-  }
-  else if(car.includes("アルファード") || car.includes("ヴェルファイア")){
+  }else if(car.includes("アルファード")){
     selectSize(15400);
-  }
-  else if(car.includes("ハイエース")){
+  }else if(car.includes("ハイエース")){
     selectSize(23100);
-  }
-  else{
-    alert("該当なし：サイズを手動で選択してください");
+  }else{
+    alert("該当なし：手動選択してください");
   }
 }
 
-// サイズ
+// トグル
+function toggle(id){
+  let el = document.getElementById(id);
+  el.classList.toggle("hidden");
+}
+
+// 選択
 function selectSize(price){
   total += price;
   document.getElementById("step1").classList.add("hidden");
   document.getElementById("step2").classList.remove("hidden");
 }
 
-// 研磨
 function selectPolish(price){
   total += price;
   document.getElementById("step2").classList.add("hidden");
   document.getElementById("step3").classList.remove("hidden");
 }
 
-// コーティング
 function selectCoat(price){
   total += price;
 
@@ -165,22 +210,21 @@ function selectCoat(price){
   document.getElementById("result").classList.remove("hidden");
 
   document.getElementById("price").innerText =
-    "合計金額：" + total.toLocaleString() + "円";
+  "合計金額：" + total.toLocaleString() + "円";
 
   let comment = "";
 
   if(total < 90000){
-    comment = "コストを抑えたベーシックプランです";
+    comment = "コストを抑えたプランです";
   }else if(total < 150000){
-    comment = "最も人気のあるバランスプランです";
+    comment = "人気のバランスプランです";
   }else{
-    comment = "最高クラスの仕上がりになります";
+    comment = "最高クラスの仕上がりです";
   }
 
   document.getElementById("comment").innerText = comment;
 }
 
-// 予約
 function reserve(){
   alert("LINE予約に繋げてください");
 }
