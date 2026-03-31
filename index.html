@@ -28,6 +28,14 @@ h2{ margin-bottom:10px; }
   margin-bottom:10px;
 }
 
+.highlight{
+  font-size:14px;
+  background:#f0f0f0;
+  padding:8px;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+
 button{
   width:100%;
   padding:15px;
@@ -62,31 +70,31 @@ button{
 
 <!-- STEP1 -->
 <div id="step1" class="card">
-<h2>STEP1：サイズ</h2>
-<div class="desc">サイズを選ぶと代表車種が表示されます</div>
+<h2>STEP1：サイズ選択</h2>
+<div class="desc">お車サイズを選択してください</div>
 
-<button onclick="selectSize(0);showCar('s')">S（軽自動車）</button>
-<button onclick="selectSize(7700);showCar('m')">M（小型普通車）</button>
-<button onclick="selectSize(15400);showCar('l')">L（普通車・SUV・ミニバン）</button>
-<button onclick="selectSize(23100);showCar('2l')">2L（大型）</button>
-
-<div id="carExample" class="desc"></div>
+<button onclick="showCar('s');selectSize(0)">S（軽自動車）</button>
+<button onclick="showCar('m');selectSize(7700)">M（小型普通車）</button>
+<button onclick="showCar('l');selectSize(15400)">L（普通車・SUV・ミニバン）</button>
+<button onclick="showCar('2l');selectSize(23100)">2L（大型）</button>
 </div>
 
 <!-- STEP2 -->
 <div id="step2" class="card hidden">
 <h2>STEP2：研磨</h2>
 
+<div id="carExample" class="highlight"></div>
+
 <button onclick="toggle('p1')">Light ▼</button>
 <div id="p1" class="desc hidden">
-新車・納車から1年未満のお車におすすめ<br>
-軽度のくすみや汚れを整えます<br>
+新車・納車から1年未満におすすめ<br>
+軽度の汚れやくすみを整えます<br>
 <button onclick="selectPolish(41800)">この内容で選択</button>
 </div>
 
 <button onclick="toggle('p2')">Standard ▼</button>
 <div id="p2" class="desc hidden">
-2工程研磨で小傷やくすみをバランスよく除去<br>
+小傷やくすみをバランスよく除去<br>
 <button onclick="selectPolish(52800)">この内容で選択</button>
 </div>
 
@@ -94,7 +102,7 @@ button{
 ⭐ Premium（おすすめ）▼
 </button>
 <div id="p3" class="desc">
-3工程研磨でより高い艶と仕上がりを実現<br>
+より高い艶と仕上がりを重視したプラン<br>
 仕上がり重視の方におすすめ<br>
 <button onclick="selectPolish(63800)">この内容で選択</button>
 </div>
@@ -105,10 +113,12 @@ button{
 <div id="step3" class="card hidden">
 <h2>STEP3：コーティング</h2>
 
+<div id="carExample2" class="highlight"></div>
+
 <button onclick="selectCoat(16500)">Basic</button>
 <div class="desc">
-撥水性能を付与し日常の汚れを落としやすくします<br>
-コストを抑えたい方におすすめ
+撥水性能を付与し汚れを落としやすくします<br>
+コスト重視の方向け
 </div>
 
 <button onclick="selectCoat(22000)">Standard</button>
@@ -121,12 +131,12 @@ button{
 </button>
 <div class="desc">
 高い艶感と耐久性を両立<br>
-長く綺麗に乗りたい方に最適
+長く綺麗を維持したい方に最適
 </div>
 
 <button onclick="selectCoat(38000)">EX</button>
 <div class="desc">
-Premiumをベースにさらに艶・防汚性能を強化
+さらに艶と防汚性能を強化した上位モデル
 </div>
 
 <button class="gold" onclick="selectCoat(200000)">
@@ -149,25 +159,22 @@ Premiumをベースにさらに艶・防汚性能を強化
 <script>
 
 let total = 0;
+let carText = "";
 
-// 車種例表示
+// 車種表示
 function showCar(type){
-  let text = "";
-
   if(type == "s"){
-    text = "例：N-BOX・タント・ワゴンR";
+    carText = "対象目安：N-BOX・タント・ワゴンR";
   }
   if(type == "m"){
-    text = "例：プリウス・カローラ・ノート";
+    carText = "対象目安：プリウス・カローラ・ノート";
   }
   if(type == "l"){
-    text = "例：ハリアー・ヴォクシー・セレナ";
+    carText = "対象目安：ハリアー・ヴォクシー・セレナ";
   }
   if(type == "2l"){
-    text = "例：アルファード・ヴェルファイア・ハイエース・ランクル";
+    carText = "対象目安：アルファード・ヴェルファイア・ハイエース・ランクル";
   }
-
-  document.getElementById("carExample").innerText = text;
 }
 
 // 開閉
@@ -179,14 +186,20 @@ function toggle(id){
 // 選択
 function selectSize(price){
   total += price;
+
   document.getElementById("step1").classList.add("hidden");
   document.getElementById("step2").classList.remove("hidden");
+
+  document.getElementById("carExample").innerText = carText;
 }
 
 function selectPolish(price){
   total += price;
+
   document.getElementById("step2").classList.add("hidden");
   document.getElementById("step3").classList.remove("hidden");
+
+  document.getElementById("carExample2").innerText = carText;
 }
 
 function selectCoat(price){
