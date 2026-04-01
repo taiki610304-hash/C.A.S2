@@ -4,231 +4,404 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C.A.S ESTIMATE</title>
-<style>
-:root{ --gold:#d4af37; --accent:#3b82f6; --bg:#000; --card:#111; --text:#fff; --sub:#aaa; --border:#262626; --line:#06c755; }
-body{ margin:0; background:#000; color:#fff; font-family:sans-serif; display:flex; justify-content:center; }
-.container{ max-width:500px; width:100%; padding:20px; background:#111; border-radius:20px; margin-bottom:120px; border: 1px solid var(--border); }
-h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding-bottom:10px; color: var(--gold); }
-.step{display:none;}
-.step.active{display:block; animation: fadeIn 0.3s;}
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* ビジュアルエリア */
-.visual-frame{ width:100%; height:200px; background:#222; border-radius:12px; margin-bottom:15px; overflow:hidden; border:1px solid var(--border); }
-.visual-frame img{ width:100%; height:100%; object-fit:cover; }
+<style>
+:root{
+--gold:#d4af37;
+--accent:#3b82f6;
+--bg:#000;
+--card:#111;
+--text:#fff;
+--sub:#aaa;
+--border:#262626;
+--line:#06c755;
+}
+
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:sans-serif;
+display:flex;
+justify-content:center;
+}
+
+.container{
+max-width:500px;
+width:100%;
+padding:20px;
+background:#111;
+border-radius:20px;
+margin-bottom:140px;
+border: 1px solid var(--border);
+}
+
+h2{
+text-align:center;
+letter-spacing:3px;
+border-bottom:1px solid #333;
+padding-bottom:10px;
+color: var(--gold);
+}
+
+.step{display:none;}
+.step.active{display:block;}
+
+/* ビフォーアフター */
+.ba-wrap{
+position:relative;
+height:220px;
+overflow:hidden;
+border-radius:10px;
+margin-bottom:15px;
+border: 1px solid var(--border);
+}
+
+.ba-wrap img{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.ba-after{
+clip-path:inset(0 50% 0 0);
+}
+
+#slider{
+position:absolute;
+bottom:10px;
+width:90%;
+left:5%;
+z-index: 10;
+}
 
 /* 輸入車スイッチ */
-.import-option { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid var(--gold); margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; }
+.import-option {
+background:#1a1a1a;
+padding:15px;
+border-radius:12px;
+border:1px solid var(--gold);
+margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
 .switch { position:relative; display:inline-block; width:50px; height:26px; }
 .switch input { opacity:0; width:0; height:0; }
-.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px; }
-.slider:before { position:absolute; content:""; height:18px; width:18px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; }
-input:checked + .slider { background-color:var(--gold); }
-input:checked + .slider:before { transform:translateX(24px); }
+.slider-btn { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px; }
+.slider-btn:before { position:absolute; content:""; height:18px; width:18px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; }
+input:checked + .slider-btn { background-color:var(--gold); }
+input:checked + .slider-btn:before { transform:translateX(24px); }
 
-/* カードスタイル */
-.option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition: 0.2s; position: relative; }
-.option img{ width:100%; border-radius:8px; margin-bottom:8px; display: block; }
-.option.selected{ border:1px solid var(--accent); background:#16213e; }
-.price{ float:right; color:var(--accent); font-weight:bold; font-size: 1.1em; }
-.desc{ font-size:0.8em; color:#aaa; margin-top:6px; line-height:1.4; }
-.badge{ font-size:0.7em; color:var(--gold); margin-bottom:4px; display:block; font-weight: bold; }
+/* カード */
+.option{
+background:#1a1a1a;
+padding:15px;
+margin-bottom:12px;
+border-radius:12px;
+border:1px solid #333;
+cursor:pointer;
+transition: 0.2s;
+}
 
-button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; cursor: pointer; }
+.option img{
+width:100%;
+height: 120px;
+object-fit: cover;
+border-radius: 8px;
+margin-bottom: 8px;
+display: block;
+}
+
+.option.selected{
+border:1px solid var(--accent);
+background:#16213e;
+}
+
+.price{
+float:right;
+color:var(--accent);
+font-weight:bold;
+}
+
+.desc{
+font-size:0.8em;
+color:#aaa;
+margin-top:6px;
+line-height:1.4;
+}
+
+.badge{
+font-size:0.7em;
+color:var(--gold);
+margin-bottom:4px;
+display:block;
+font-weight: bold;
+}
+
+/* ボタン */
+button{
+width:100%;
+padding:16px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor: pointer;
+}
+
 .next{background:var(--accent);color:#fff;}
 .prev{background:#222;color:#aaa;}
-.total-btn{background:var(--line); color:#fff; font-size: 1.1em;}
+.line-btn{background:var(--line);color:#fff; font-size: 1.1em;}
 
 /* 合計パネル */
-.total-panel{ position:fixed; bottom:15px; left:50%; transform:translateX(-50%); width:90%; max-width:450px; background:linear-gradient(135deg, #1e293b, #0f172a); padding:15px; border-radius:16px; text-align:center; border:1px solid var(--accent); box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 100; }
-.import-badge { display:none; color: var(--gold); font-size: 0.75em; font-weight: bold; margin-bottom: 5px; }
+.total-panel{
+position:fixed;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+width:90%;
+max-width:450px;
+background:linear-gradient(135deg, #1e293b, #0f172a);
+padding:15px;
+border-radius:16px;
+text-align:center;
+border:1px solid var(--accent);
+z-index: 100;
+box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
-/* モーダル */
-.modal{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:9999; }
-.modal-content{ text-align:center; color:var(--gold); padding:20px; }
+.import-label { display:none; color:var(--gold); font-size:0.7em; margin-bottom:4px; font-weight:bold; }
+
+/* ハイモース演出 */
+.ultimate-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.ultimate-box{ text-align:center; color:var(--gold); padding:20px; }
+.shine {
+width:150px; height:150px; margin:20px auto;
+background: linear-gradient(45deg, #000, var(--gold), #000);
+background-size: 200% 200%;
+animation: shine-anim 3s infinite;
+border-radius: 50%;
+}
+@keyframes shine-anim { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-    <h2>C.A.S ESTIMATE</h2>
+<h2>C.A.S ESTIMATE</h2>
 
-    <div class="step active" id="step1">
-        <div class="visual-frame">
-            <img src="https://drive.google.com/uc?export=view&id=1yb05F0B-FP1SJpVcD9HZ6SrV37vG984a">
-        </div>
-        <h3>01 車種サイズを選択</h3>
-        
-        <div class="import-option">
-            <div>
-                <strong>輸入車（外車）</strong>
-                <div style="font-size:0.7em; color:var(--sub);">施工難易度により+20%加算</div>
-            </div>
-            <label class="switch">
-                <input type="checkbox" id="importCheck" onchange="calc()">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <div class="option" onclick="select('size','S')">Sサイズ<div class="desc">N-BOX / タント / 軽自動車全般</div></div>
-        <div class="option" onclick="select('size','M')">Mサイズ<div class="desc">ヤリス / ルーミー / 小型車</div></div>
-        <div class="option" onclick="select('size','L')">Lサイズ<div class="desc">プリウス / ハリアー / 普通車</div></div>
-        <div class="option" onclick="select('size','2L')">2Lサイズ<div class="desc">アルファード / ランクル / 大型車</div></div>
-        <button class="next" onclick="move(2)">次へ（研磨選択）</button>
+<div class="step active" id="step1">
+    <div class="ba-wrap">
+        <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?q=80&w=800">
+        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=800" class="ba-after" id="afterImg">
+        <input type="range" min="0" max="100" value="50" id="slider">
     </div>
 
-    <div class="step" id="step2">
-        <div class="visual-frame">
-            <img src="https://drive.google.com/uc?export=view&id=1G1TEZzddGmv4Ltb_GaOiq_9PJXvPW_i1">
+    <h3>01 車種サイズを選択</h3>
+
+    <div class="import-option">
+        <div>
+            <strong>輸入車（外車）</strong>
+            <div style="font-size:0.7em; color:var(--sub);">※施工難易度により+20%加算</div>
         </div>
-        <h3>02 下地研磨を選択</h3>
-        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1"></span>軽研磨（1工程）<div class="desc" style="color:var(--gold);">★新車・納車1ヶ月以内におすすめ</div></div>
-        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2"></span>復元研磨（2工程）<div class="desc">洗車キズを除去し、艶を復元します</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3"></span>鏡面研磨（3工程）<div class="desc">極限まで平滑に磨き上げる最高峰下地</div></div>
-        <button class="prev" onclick="move(1)">戻る</button>
-        <button class="next" onclick="move(3)">次へ（コート選択）</button>
+        <label class="switch">
+            <input type="checkbox" id="importCheck" onchange="calc()">
+            <span class="slider-btn"></span>
+        </label>
     </div>
 
-    <div class="step" id="step3">
-        <h3>03 コーティングを選択</h3>
-        
-        <div class="option" onclick="select('coat','Entry')">
-            <img src="https://drive.google.com/uc?export=view&id=1YmnTBGV0YGXTp_U8hcBoN6A-XFrIXzxM">
-            <span class="badge">NANO GLASS [YZ024]</span><span class="price" id="c1"></span>Basicプラン
-            <div class="desc">ナノ粒子が密着。初めての方に</div>
-        </div>
-        <div class="option" onclick="select('coat','Standard')">
-            <img src="https://drive.google.com/uc?export=view&id=1NzjCnRVe7Q81bPFqNnurONKvNuQun4xg">
-            <span class="badge">FLOW [有機ポリシラザン]</span><span class="price" id="c2"></span>Standardプラン
-            <div class="desc">圧倒的な撥水とスリック性</div>
-        </div>
-        <div class="option" onclick="select('coat','Premium')">
-            <img src="https://drive.google.com/uc?export=view&id=1ZAybEHaN0qK38DVVPANw01fH_RISK5Fa">
-            <span class="badge">2-LAYER [seg+FLOW]</span><span class="price" id="c3"></span>Premiumプラン
-            <div class="desc">2層構造。高耐久と深い光沢</div>
-        </div>
-        <div class="option" onclick="select('coat','Executive')">
-            <img src="https://drive.google.com/uc?export=view&id=1TrEYFQRRhuuod-v4Vhz9uEY8umx7cXK0">
-            <span class="badge">3-LAYER [究極保護]</span><span class="price" id="c4"></span>Executiveプラン
-            <div class="desc">圧倒的な膜厚感と最高耐久</div>
-        </div>
-        <div class="option" style="border-color:var(--gold);" onclick="select('coat','Ultimate')">
-            <img src="https://drive.google.com/uc?export=view&id=1-EATLqCL2kLTg2RvMwKUYbR3rJdH9OT2">
-            <span class="badge">G'ZOX 最高峰</span><span class="price">ASK</span>Ultimate [ハイモース]
-            <div class="desc">異次元の艶。熟練工による極致</div>
-        </div>
+    <div class="option" onclick="select('size','S')">Sサイズ<div class="desc">軽自動車 (N-BOX / タント 等)</div></div>
+    <div class="option" onclick="select('size','M')">Mサイズ<div class="desc">小型車 (ヤリス / ルーミー 等)</div></div>
+    <div class="option" onclick="select('size','L')">Lサイズ<div class="desc">普通車 (プリウス / ハリアー 等)</div></div>
+    <div class="option" onclick="select('size','2L')">2Lサイズ<div class="desc">大型車 (アルファード / ランクル 等)</div></div>
 
-        <button class="prev" onclick="move(2)">戻る</button>
-        <button class="total-btn" onclick="sendLine()">この内容でLINE見積もり確定</button>
+    <button class="next" onclick="move(2)">下地研磨の選択へ</button>
+</div>
+
+<div class="step" id="step2">
+    <h3>02 下地研磨を選択</h3>
+
+    <div class="option" onclick="select('polish','Light')">
+        <span class="price" id="p1"></span>軽研磨（1工程）
+        <div class="desc">新車・軽度な汚れ向け。塗装を整え艶を出します。</div>
     </div>
+
+    <div class="option" onclick="select('polish','Standard')">
+        <span class="price" id="p2"></span>復元研磨（2工程）
+        <div class="desc">洗車キズを除去し、本来の輝きを復元します。</div>
+    </div>
+
+    <div class="option" onclick="select('polish','Premium')">
+        <span class="price" id="p3"></span>鏡面研磨（3工程）
+        <div class="desc">徹底的に磨き込み、極限の平滑面を作ります。</div>
+    </div>
+
+    <button class="prev" onclick="move(1)">戻る</button>
+    <button class="next" onclick="move(3)">コーティング選択へ</button>
+</div>
+
+<div class="step" id="step3">
+    <h3>03 コーティングを選択</h3>
+
+    <div class="option" onclick="select('coat','Entry')">
+        <img src="https://images.unsplash.com/photo-1635773054018-22c380963ce3?q=80&w=400">
+        <span class="badge">NANO GLASS [YZ024]</span><span class="price" id="c1"></span>Basic
+        <div class="desc">ナノ粒子が密着。リーズナブルに施工したい方へ。</div>
+    </div>
+
+    <div class="option" onclick="select('coat','Standard')">
+        <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=400">
+        <span class="badge">FLOW [ポリシラザン]</span><span class="price" id="c2"></span>Standard
+        <div class="desc">人気No.1。圧倒的な撥水と汚れにくさを両立。</div>
+    </div>
+
+    <div class="option" onclick="select('coat','Premium')">
+        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=400">
+        <span class="badge">2-LAYER [2層構造]</span><span class="price" id="c3"></span>Premium
+        <div class="desc">無機と有機の2層。深い光沢と高耐久を実現。</div>
+    </div>
+
+    <div class="option" onclick="select('coat','Executive')">
+        <img src="https://images.unsplash.com/photo-1594732832278-abd644401426?q=80&w=400">
+        <span class="badge">3-LAYER [究極保護]</span><span class="price" id="c4"></span>Executive
+        <div class="desc">レジン層を含む3層構造。最高峰の厚みと輝き。</div>
+    </div>
+
+    <div class="option" style="border:1px solid var(--gold);" onclick="select('coat','Ultimate')">
+        <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=400">
+        <span class="badge">G'ZOX 最高峰</span>Ultimate [ハイモース]
+        <div class="desc">選ばれた車だけの異次元の艶。※要問合せ</div>
+    </div>
+
+    <button class="prev" onclick="move(2)">戻る</button>
+    <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
+</div>
+
 </div>
 
 <div class="total-panel">
-    <div id="importBadge" class="import-badge">輸入車料金 (+20%) 適用中</div>
-    <div style="font-size:0.7em; color:var(--sub);">概算合計（税込）</div>
-    <span id="yen" style="color:var(--accent);">¥</span><span id="totalDisplay" style="font-size:1.6em; font-weight:bold;">0</span>
+    <div id="importBadge" class="import-label">輸入車割増(+20%) 適用中</div>
+    概算 ¥<span id="totalDisplay" style="font-size: 1.5em; font-weight: bold;">0</span>
 </div>
 
-<div id="ultimateModal" class="modal">
-    <div class="modal-content">
-        <h2>Ultimate Hi-Mohs</h2>
-        <p>比類なき艶と硬度。<br>特別限定施工プランです。</p>
+<div id="ultimateModal" class="ultimate-modal">
+    <div class="ultimate-box">
+        <h2>G'ZOX Hi-Mohs</h2>
+        <div class="shine"></div>
+        <p>比類なき艶と驚異の撥水。<br>熟練工による特別な施工プランです。</p>
         <button class="next" onclick="closeUltimate()">詳細を確認する</button>
     </div>
 </div>
 
 <script>
-const master = {
-    polish: {
-        Light: {S:41800, M:49500, L:57200, '2L':64900},
-        Standard: {S:52800, M:60500, L:68200, '2L':75900},
-        Premium: {S:63800, M:71500, L:79200, '2L':86900}
+const price={
+    polish:{
+        Light:{S:41800,M:49500,L:57200,'2L':64900},
+        Standard:{S:52800,M:60500,L:68200,'2L':75900},
+        Premium:{S:63800,M:71500,L:79200,'2L':86900}
     },
-    coat: {
-        Entry: {S:14300, M:16500, L:18700, '2L':20900},
-        Standard: {S:27500, M:29700, L:31900, '2L':34100},
-        Premium: {S:40700, M:42900, L:45100, '2L':47300},
-        Executive: {S:57200, M:62700, L:68200, '2L':73700},
-        Ultimate: "ASK"
+    coat:{
+        Entry:{S:14300,M:16500,L:18700,'2L':20900},
+        Standard:{S:27500,M:29700,L:31900,'2L':34100},
+        Premium:{S:40700,M:42900,L:45100,'2L':47300},
+        Executive:{S:57200,M:62700,L:68200,'2L':73700}
     }
 };
 
-let sel = { size: 'S', polish: 'Light', coat: 'Entry' };
+let sel={size:'S', polish:'Light', coat:'Entry'};
 
-function select(type, val) {
-    sel[type] = val;
-    event.currentTarget.parentElement.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+function select(type,val){
+    sel[type]=val;
+    event.currentTarget.parentElement.querySelectorAll('.option').forEach(el=>el.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
 
-    if (type === "size") updateLabels();
-    if (val === "Ultimate") showUltimate();
+    if(type==="size") updatePrices();
+    if(val==="Ultimate") showUltimate();
     calc();
 }
 
-function updateLabels() {
-    const s = sel.size;
-    document.getElementById('p1').innerText = "¥" + master.polish.Light[s].toLocaleString();
-    document.getElementById('p2').innerText = "¥" + master.polish.Standard[s].toLocaleString();
-    document.getElementById('p3').innerText = "¥" + master.polish.Premium[s].toLocaleString();
-    document.getElementById('c1').innerText = "¥" + master.coat.Entry[s].toLocaleString();
-    document.getElementById('c2').innerText = "¥" + master.coat.Standard[s].toLocaleString();
-    document.getElementById('c3').innerText = "¥" + master.coat.Premium[s].toLocaleString();
-    document.getElementById('c4').innerText = "¥" + master.coat.Executive[s].toLocaleString();
+function updatePrices(){
+    let s=sel.size;
+    document.getElementById('p1').innerText="¥"+price.polish.Light[s].toLocaleString();
+    document.getElementById('p2').innerText="¥"+price.polish.Standard[s].toLocaleString();
+    document.getElementById('p3').innerText="¥"+price.polish.Premium[s].toLocaleString();
+    document.getElementById('c1').innerText="¥"+price.coat.Entry[s].toLocaleString();
+    document.getElementById('c2').innerText="¥"+price.coat.Standard[s].toLocaleString();
+    document.getElementById('c3').innerText="¥"+price.coat.Premium[s].toLocaleString();
+    document.getElementById('c4').innerText="¥"+price.coat.Executive[s].toLocaleString();
 }
 
-function calc() {
+function calc(){
     const display = document.getElementById('totalDisplay');
-    const yen = document.getElementById('yen');
     const badge = document.getElementById('importBadge');
     const isImport = document.getElementById('importCheck').checked;
 
-    if (sel.coat === "Ultimate") {
-        display.innerText = "ASK";
-        yen.style.display = "none";
+    if(sel.coat==="Ultimate"){
+        display.innerText="ASK";
         badge.style.display = "none";
         return;
     }
 
-    yen.style.display = "inline";
-    let base = master.polish[sel.polish][sel.size] + master.coat[sel.coat][sel.size];
-    let final = isImport ? Math.floor(base * 1.2) : base;
-    
-    display.innerText = final.toLocaleString();
+    let t = price.polish[sel.polish][sel.size] + price.coat[sel.coat][sel.size];
+    if(isImport) t = Math.floor(t * 1.2);
+
+    display.innerText = t.toLocaleString();
     badge.style.display = isImport ? "block" : "none";
 }
 
-function move(n) {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step' + n).classList.add('active');
+function move(n){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById('step'+n).classList.add('active');
     window.scrollTo(0,0);
 }
 
-function sendLine() {
+function sendLine(){
     const isImport = document.getElementById('importCheck').checked ? "輸入車" : "国産車";
     const total = document.getElementById('totalDisplay').innerText;
-    const msg = `【見積依頼】
-■サイズ: ${sel.size}
-■区分: ${isImport}
-■研磨: ${sel.polish}
-■コート: ${sel.coat}
-■概算合計: ${total === 'ASK' ? 'ASK' : '¥' + total}`;
-
-    window.location.href = `https://line.me/R/oaMessage/@009zapmx/?${encodeURIComponent(msg)}`;
+    const msg=`【見積依頼】
+サイズ:${sel.size}
+車両区分:${isImport}
+下地研磨:${sel.polish}
+コート:${sel.coat}
+概算合計:${total === 'ASK' ? 'ASK' (要問合せ) : '¥'+total}`;
+    
+    window.location.href=`https://line.me/R/oaMessage/@009zapmx/?${encodeURIComponent(msg)}`;
 }
 
-function showUltimate() { document.getElementById("ultimateModal").style.display = "flex"; }
-function closeUltimate() { document.getElementById("ultimateModal").style.display = "none"; }
+document.getElementById('slider').oninput=function(){
+    document.getElementById('afterImg').style.clipPath=`inset(0 ${100-this.value}% 0 0)`;
+}
 
-// 初期選択状態の反映
+function showUltimate(){ document.getElementById("ultimateModal").style.display="flex"; }
+function closeUltimate(){ document.getElementById("ultimateModal").style.display="none"; }
+
+// 初期化
 window.onload = () => {
-    updateLabels();
+    updatePrices();
     calc();
-    // 初期選択の見た目を反映
+    // 各ステップの初期選択に色をつける
     document.querySelectorAll('.step').forEach(step => {
         const firstOpt = step.querySelector('.option');
         if(firstOpt) firstOpt.classList.add('selected');
     });
 };
 </script>
+
 </body>
 </html>
