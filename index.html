@@ -9,8 +9,10 @@
         body { font-family: "Hiragino Kaku Gothic ProN", sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 10px; display: flex; justify-content: center; }
         .container { max-width: 500px; width: 100%; background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.8); margin-bottom: 120px; }
         h2 { text-align: center; letter-spacing: 4px; font-weight: 300; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .visual-frame { width: 100%; height: 200px; background: #222; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); }
+        
+        .visual-frame { width: 100%; height: 200px; background: #222; border-radius: 12px; margin-bottom: 20px; overflow: hidden; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
         .visual-frame img { width: 100%; height: 100%; object-fit: cover; }
+        
         .step { display: none; }
         .step.active { display: block; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
@@ -18,7 +20,6 @@
         .option-card { background: #1a1a1a; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 15px; cursor: pointer; display: flex; gap: 15px; align-items: flex-start; transition: 0.2s; }
         .option-card.selected { border-color: var(--accent); background: #16213e; }
         
-        /* 輸入車スイッチ */
         .import-option { background: #1a1a1a; padding: 20px; border-radius: 12px; border: 1px solid var(--gold); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -27,13 +28,12 @@
         input:checked + .slider { background-color: var(--gold); }
         input:checked + .slider:before { transform: translateX(26px); }
 
-        .card-img { width: 70px; height: 90px; background: #222; border-radius: 6px; flex-shrink: 0; overflow: hidden; }
+        .card-img { width: 70px; height: 90px; background: #222; border-radius: 6px; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .card-img img { width: 100%; height: 100%; object-fit: contain; }
+        
         .price-tag { float: right; font-weight: bold; color: var(--accent); font-size: 1.1em; }
         .description { font-size: 0.8em; color: var(--text-sub); line-height: 1.5; margin-top: 5px; }
         .spec-label { font-size: 0.7em; color: var(--gold); font-weight: bold; margin-bottom: 4px; display: block; }
-        .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; border-top: 1px solid #333; padding-top: 8px; }
-        .spec-node { font-size: 0.65em; color: #ccc; }
         
         .btn-group { display: flex; gap: 10px; margin-top: 25px; }
         button { flex: 1; padding: 16px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
@@ -49,13 +49,13 @@
     <h2>C.A.S ESTIMATE</h2>
 
     <div class="step active" id="step1">
-        <div class="visual-frame"><img src="https://images.unsplash.com/photo-1621932953986-15fcfec83275?q=80&w=800" alt="Size Select"></div>
+        <div class="visual-frame"><img src="https://drive.google.com/uc?export=view&id=1yb05F0B-FP1SJpVcD9HZ6SrV37vG984a" alt="Size Select"></div>
         <h3 style="font-size:0.9em; color:var(--gold);">01. 車種サイズ・車両タイプを選択</h3>
         
         <div class="import-option">
             <div>
                 <strong>輸入車（外車）</strong>
-                <div style="font-size: 0.75em; color: var(--text-sub);">※施工難易度により+20%加算されます</div>
+                <div style="font-size: 0.75em; color: var(--text-sub);">※施工難易度により全体額に+20%加算</div>
             </div>
             <label class="switch">
                 <input type="checkbox" id="importCheck" onchange="calc()">
@@ -71,11 +71,11 @@
     </div>
 
     <div class="step" id="step2">
-        <div class="visual-frame"><img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=800" alt="Polish Select"></div>
+        <div class="visual-frame"><img src="https://drive.google.com/uc?export=view&id=1G1TEZzddGmv4Ltb_GaOiq_9PJXvPW_i1" alt="Polish Select"></div>
         <h3 style="font-size:0.9em; color:var(--gold);">02. 下地施工 (研磨) を選択</h3>
         <div class="option-card" onclick="select('polish', 'Light')">
             <div class="card-content"><span class="price-tag" id="disp-p-light">¥--</span><strong>軽研磨 (1工程)</strong>
-            <div class="description">★新車・納車1ヶ月以内のお車におすすめ</div></div>
+            <div class="description" style="color:var(--gold);">★新車・納車1ヶ月以内のお車におすすめ</div></div>
         </div>
         <div class="option-card" onclick="select('polish', 'Standard')">
             <div class="card-content"><span class="price-tag" id="disp-p-standard">¥--</span><strong>復元研磨 (2工程)</strong>
@@ -83,7 +83,7 @@
         </div>
         <div class="option-card" onclick="select('polish', 'Premium')">
             <div class="card-content"><span class="price-tag" id="disp-p-premium">¥--</span><strong>鏡面研磨 (3工程)</strong>
-            <div class="description">徹底的に磨き込み、極限の平滑な下地を作ります。</div></div>
+            <div class="description">徹底的に磨き込み、極限の平滑面を作ります。</div></div>
         </div>
         <div class="btn-group"><button class="btn-prev" onclick="move(1)">戻る</button><button class="btn-next" onclick="move(3)">コーティング選択へ</button></div>
     </div>
@@ -92,33 +92,33 @@
         <h3 style="font-size:0.9em; color:var(--gold);">03. コーティング剤を選択</h3>
         
         <div class="option-card" onclick="select('coat', 'Entry')">
-            <div class="card-img"><img src="https://lh3.googleusercontent.com/u/0/d/1Ymn" alt="YZ024"></div>
+            <div class="card-img"><img src="https://drive.google.com/uc?export=view&id=1YmnTBGV0YGXTp_U8hcBoN6A-XFrIXzxM" alt="YZ024"></div>
             <div class="card-content"><span class="price-tag" id="disp-c-entry">¥--</span><span class="spec-label">NANO GLASS [YZ024]</span><strong>Basicプラン</strong>
-                <div class="description">ナノレベルの粒子が密着。初めての方に最適。</div></div>
+                <div class="description">ナノレベルの粒子が密着。初めての方に。</div></div>
         </div>
 
         <div class="option-card" onclick="select('coat', 'Standard')">
-            <div class="card-img"><img src="https://lh3.googleusercontent.com/u/0/d/1NzjCnRVe7" alt="FLOW"></div>
+            <div class="card-img"><img src="https://drive.google.com/uc?export=view&id=1NzjCnRVe7Q81bPFqNnurONKvNuQun4xg" alt="FLOW"></div>
             <div class="card-content"><span class="price-tag" id="disp-c-std">¥--</span><span class="spec-label">FLOW [有機ポリシラザン]</span><strong>Standardプラン</strong>
-                <div class="description">圧倒的なスリック性と疎水性を発揮する1層コート。</div></div>
+                <div class="description">圧倒的なスリック性と疎水性を発揮。</div></div>
         </div>
 
         <div class="option-card" onclick="select('coat', 'Premium')">
-            <div class="card-img"><img src="https://lh3.googleusercontent.com/u/0/d/1ZAybEHaN0qK38DV" alt="2-LAYER"></div>
+            <div class="card-img"><img src="https://drive.google.com/uc?export=view&id=1ZAybEHaN0qK38DVVPANw01fH_RISK5Fa" alt="2-LAYER"></div>
             <div class="card-content"><span class="price-tag" id="disp-c-pre">¥--</span><span class="spec-label">2-LAYER [seg + FLOW]</span><strong>Premiumプラン</strong>
-                <div class="description">無機と有機シラザンの2層構造。高耐久と深い光沢を両立。</div></div>
+                <div class="description">無機と有機の2層構造。高耐久と光沢を両立。</div></div>
         </div>
 
         <div class="option-card" onclick="select('coat', 'Executive')">
-            <div class="card-img"><img src="https://lh3.googleusercontent.com/u/0/d/1TrEYFQRRhuuod-v4" alt="3-LAYER"></div>
+            <div class="card-img"><img src="https://drive.google.com/uc?export=view&id=1TrEYFQRRhuuod-v4Vhz9uEY8umx7cXK0" alt="3-LAYER"></div>
             <div class="card-content"><span class="price-tag" id="disp-c-exe">¥--</span><span class="spec-label">3-LAYER [seg+FLOW+gross]</span><strong>Executiveプラン</strong>
-                <div class="description">premiumプランの上にレジン粒子を重ねる究極の3層保護。圧倒的膜厚感。</div></div>
+                <div class="description">レジン粒子を重ねる究極の3層保護。</div></div>
         </div>
 
         <div class="option-card" style="border:1px solid var(--gold);" onclick="select('coat', 'Ultimate')">
-            <div class="card-img"><img src="https://lh3.googleusercontent.com/u/0" alt="Hi-Mohs"></div>
+            <div class="card-img"><img src="https://drive.google.com/uc?export=view&id=1-EATLqCL2kLTg2RvMwKUYbR3rJdH9OT2" alt="Hi-Mohs"></div>
             <div class="card-content"><span class="price-tag">ASK</span><span class="spec-label">G'ZOX 最高峰</span><strong>Ultimate [ハイモース]</strong>
-                <div class="description">比類なき艶と硬度。熟練工のみが成せる極致。</div></div>
+                <div class="description">比類なき艶と硬度。価格は要お問合せとなります。</div></div>
         </div>
 
         <div class="btn-group"><button class="btn-prev" onclick="move(2)">戻る</button><button class="btn-next" onclick="showResult()" style="background:#059669">見積もりを確定</button></div>
@@ -134,7 +134,7 @@
     <div class="total-panel">
         <div class="import-badge" id="importBadge">輸入車料金 (+20%) 適用中</div>
         <div style="font-size:0.75em; color:var(--text-sub);">概算合計（税込）</div>
-        <span id="pricePrefix" style="font-size:0.9em; color:var(--accent);">¥</span><span id="totalDisplay" style="font-size:1.8em; font-weight:bold;">0</span>
+        <span id="yen-mark" style="font-size:0.9em; color:var(--accent);">¥</span><span id="totalDisplay" style="font-size:1.8em; font-weight:bold;">0</span>
     </div>
 </div>
 
@@ -162,34 +162,38 @@
         event.currentTarget.classList.add('selected');
         
         if (cat === 'size') {
-            ['light','standard','premium'].forEach(p => {
-                const base = master.polish[p.charAt(0).toUpperCase() + p.slice(1)][val];
-                document.getElementById(`disp-p-${p}`).innerText = "¥" + base.toLocaleString();
+            ['Light','Standard','Premium'].forEach(p => {
+                const base = master.polish[p][val];
+                document.getElementById(`disp-p-${p.toLowerCase()}`).innerText = "¥" + base.toLocaleString();
             });
-            ['entry','std','pre','exe'].forEach(c => {
-                let key = c === 'std' ? 'Standard' : c === 'pre' ? 'Premium' : c === 'exe' ? 'Executive' : 'Entry';
-                const base = master.coat[key][val];
-                document.getElementById(`disp-c-${c}`).innerText = "¥" + base.toLocaleString();
+            ['Entry','Standard','Premium','Executive'].forEach(c => {
+                const base = master.coat[c][val];
+                let targetId = c === 'Standard' ? 'std' : c === 'Premium' ? 'pre' : c === 'Executive' ? 'exe' : 'entry';
+                document.getElementById(`disp-c-${targetId}`).innerText = "¥" + base.toLocaleString();
             });
         }
         calc();
     }
 
     function calc() {
+        const totalDisplay = document.getElementById('totalDisplay');
+        const yenMark = document.getElementById('yen-mark');
+        const importBadge = document.getElementById('importBadge');
+
         if (sel.coat === 'Ultimate') {
-            document.getElementById('totalDisplay').innerText = "ASK";
-            document.getElementById('pricePrefix').style.display = "none";
-            document.getElementById('importBadge').style.display = "none";
+            totalDisplay.innerText = "ASK";
+            yenMark.style.display = "none";
+            importBadge.style.display = "none";
             return;
         }
 
-        document.getElementById('pricePrefix').style.display = "inline";
+        yenMark.style.display = "inline";
         let baseTotal = (sel.polish ? master.polish[sel.polish][sel.size] : 0) + (sel.coat ? master.coat[sel.coat][sel.size] : 0);
         const isImport = document.getElementById('importCheck').checked;
         const finalTotal = isImport ? Math.floor(baseTotal * 1.2) : baseTotal;
         
-        document.getElementById('totalDisplay').innerText = finalTotal.toLocaleString();
-        document.getElementById('importBadge').style.display = isImport ? 'block' : 'none';
+        totalDisplay.innerText = finalTotal.toLocaleString();
+        importBadge.style.display = isImport ? 'block' : 'none';
     }
 
     function move(n) {
@@ -202,14 +206,15 @@
         if(!sel.polish || !sel.coat) return alert('下地工程とコーティング剤を選択してください');
         move('Result');
         const planName = sel.coat === 'Entry' ? 'Basic' : sel.coat;
-        const resultPrice = sel.coat === 'Ultimate' ? "ASK" : "¥" + document.getElementById('totalDisplay').innerText;
+        const finalVal = document.getElementById('totalDisplay').innerText;
+        const priceStr = finalVal === "ASK" ? "ASK (要お問合せ)" : "¥" + finalVal;
         
         document.getElementById('summary').innerHTML = `
             <strong>車種サイズ:</strong> ${sel.size}<br>
             <strong>下地施工:</strong> ${sel.polish}<br>
             <strong>プラン:</strong> ${planName}<br>
             <strong>車両区分:</strong> ${document.getElementById('importCheck').checked ? "輸入車" : "国産車"}<hr style="border:0; border-top:1px solid #333; margin:15px 0;">
-            <div style="text-align:center; font-size:1.8em; font-weight:bold; color:var(--gold);">${resultPrice}</div>
+            <div style="text-align:center; font-size:1.8em; font-weight:bold; color:var(--gold);">${priceStr}</div>
         `;
     }
 
@@ -218,10 +223,9 @@
         const vehicle = document.getElementById('importCheck').checked ? "輸入車" : "国産車";
         const total = document.getElementById('totalDisplay').innerText;
         const msg = `【見積依頼】%0Aサイズ:${sel.size}%0A研磨:${sel.polish}%0Aプラン:${planName}%0A区分:${vehicle}%0A合計:${total === 'ASK' ? 'ASK' : '¥'+total}`;
-        window.location.href = `https://line.me/R/oaMessage/@009zampx/?${msg}`;
+        window.location.href = `https://line.me/R/oaMessage/@009zapmx/?${msg}`;
     }
 
-    // 初期化
     select('size', 'S');
 </script>
 </body>
