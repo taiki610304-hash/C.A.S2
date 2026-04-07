@@ -5,23 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C.A.S ESTIMATE</title>
 <style>
-:root{ --gold:#d4af37; --accent:#3b82f6; --bg:#000; --card:#111; --text:#fff; --sub:#aaa; --border:#262626; --line:#06c755; }
+:root{ --gold:#d4af37; --accent:#3b82f6; --bg:#000; --card:#111; --text:#fff; --sub:#aaa; --border:#262626; --line:#06c755; --recommend:#ff4d4d; }
 body{ margin:0; background:#000; color:#fff; font-family:sans-serif; display:flex; justify-content:center; }
 .container{ max-width:500px; width:100%; padding:20px; background:#111; border-radius:20px; margin-bottom:140px; border:1px solid var(--border); }
 h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding-bottom:10px; color:var(--gold); }
 .step{display:none;}
 .step.active{display:block;}
 
-/* 計算ツールエリア */
-.calc-tool { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #444; margin-bottom:20px; }
-.calc-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px; }
-.calc-grid input { background:#333; border:1px solid #555; color:#fff; padding:8px; border-radius:5px; width:80%; }
-.calc-result { margin-top:15px; padding:10px; background:#222; border-radius:8px; text-align:center; border-left:4px solid var(--accent); }
-.vol-num { font-size:1.2em; font-weight:bold; color:var(--accent); }
-
+/* ビジュアルエリア */
 .visual-frame{ width:100%; height:200px; background:#222; border-radius:12px; margin-bottom:15px; overflow:hidden; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; }
 .visual-frame img{ width:100%; height:100%; object-fit:cover; }
 
+/* 計算ツールエリア */
+.calc-tool { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #444; margin-bottom:20px; }
+.calc-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px; }
+.calc-grid input { background:#333; border:1px solid #555; color:#fff; padding:8px; border-radius:5px; width:85%; font-size:16px; }
+.calc-result { margin-top:15px; padding:10px; background:#222; border-radius:8px; text-align:center; border-left:4px solid var(--accent); }
+.vol-num { font-size:1.2em; font-weight:bold; color:var(--accent); }
+
+/* 輸入車スイッチ */
 .import-option { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid var(--gold); margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; }
 .switch { position:relative; display:inline-block; width:50px; height:26px; }
 .switch input { opacity:0; width:0; height:0; }
@@ -30,11 +32,15 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 input:checked + .slider-btn { background-color:var(--gold); }
 input:checked + .slider-btn:before { transform:translateX(24px); }
 
-.option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition:0.2s; }
+/* カード */
+.option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition:0.2s; position:relative; }
 .option.selected{ border:1px solid var(--accent); background:#16213e; }
 .price{ float:right; color:var(--accent); font-weight:bold; }
 .desc{ font-size:0.8em; color:#aaa; margin-top:6px; line-height:1.4; }
 .badge{ font-size:0.7em; color:var(--gold); margin-bottom:4px; display:block; font-weight:bold; }
+
+/* オススメラベル */
+.rec-tag { position:absolute; top:-10px; right:10px; background:var(--recommend); color:#fff; font-size:0.7em; padding:2px 8px; border-radius:4px; font-weight:bold; z-index:1; }
 
 button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
 .next{background:var(--accent);color:#fff;}
@@ -51,18 +57,21 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <h2>C.A.S ESTIMATE</h2>
 
     <div class="step active" id="step1">
-        <h3>01 車種サイズ診断</h3>
+        <div class="visual-frame">
+            <img src="https://raw.githubusercontent.com/caspremiumcardetailing/C.A.S2/a10f81c68c35a6ab199c85ca53edc9d8f26548de/%E9%81%93%E7%84%A1%E3%81%8D%E6%99%82%E4%BB%A3%E3%82%92%E8%B6%8A%E3%81%88%E3%81%A6%E3%82%86%E3%81%91%E3%80%82%20ALL%20NEW%20LAND%20CRUISER%EF%BC%81.png" alt="LAND CRUISER">
+        </div>
+        <h3>01 車種サイズを選択</h3>
         
         <div class="calc-tool">
-            <div style="font-size:0.9em; margin-bottom:10px; color:var(--gold);">▼ 車検証の数値から自動判定</div>
+            <div style="font-size:0.85em; margin-bottom:10px; color:var(--gold);">【サイズ判定ツール】長さ×幅×高さ(cm)を入力</div>
             <div class="calc-grid">
-                <div>長さ(cm)<br><input type="number" id="vL" placeholder="470" oninput="autoCalcSize()"></div>
-                <div>幅(cm)<br><input type="number" id="vW" placeholder="170" oninput="autoCalcSize()"></div>
-                <div>高さ(cm)<br><input type="number" id="vH" placeholder="150" oninput="autoCalcSize()"></div>
+                <div>長さ<input type="number" id="vL" placeholder="470" oninput="autoCalcSize()"></div>
+                <div>幅<input type="number" id="vW" placeholder="170" oninput="autoCalcSize()"></div>
+                <div>高さ<input type="number" id="vH" placeholder="150" oninput="autoCalcSize()"></div>
             </div>
             <div class="calc-result">
-                体積: <span id="volRes" class="vol-num">0.00</span> $m^3$ 
-                → <span id="sizeRes" style="font-weight:bold; color:var(--gold);">サイズを自動選択します</span>
+                体積: <span id="volRes" class="vol-num">0.00</span> m³ 
+                → <span id="sizeRes" style="font-weight:bold; color:var(--gold);">自動選択中</span>
             </div>
         </div>
 
@@ -79,37 +88,54 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 
         <div id="sizeOptions">
             <div class="option" data-size="S" onclick="select('size','S')">Sサイズ<div class="desc">軽自動車</div></div>
-            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ<div class="desc">10.5$m^3$未満</div></div>
-            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ<div class="desc">10.5 〜 12.3$m^3$未満</div></div>
-            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ<div class="desc">12.3 〜 14.0$m^3$未満</div></div>
-            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ<div class="desc">14.0 〜 17.0$m^3$未満</div></div>
-            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ<div class="desc">17.0$m^3$以上</div></div>
+            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ<div class="desc">10.5m³未満</div></div>
+            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ<div class="desc">10.5 〜 12.3m³未満</div></div>
+            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ<div class="desc">12.3 〜 14.0m³未満</div></div>
+            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ<div class="desc">14.0 〜 17.0m³未満</div></div>
+            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ<div class="desc">17.0m³以上</div></div>
         </div>
         <button class="next" onclick="move(2)">下地研磨の選択へ</button>
     </div>
 
     <div class="step" id="step2">
-        <h3>02 下地施工（税込）を選択</h3>
-        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1"></span>Light<div class="desc">研磨1工程</div></div>
-        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2"></span>★Standard<div class="desc">研磨2工程</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3"></span>Premium<div class="desc">研磨3工程</div></div>
+        <div class="visual-frame">
+            <img src="https://raw.githubusercontent.com/caspremiumcardetailing/C.A.S2/2bd92bbb686c4c7955cf4c69180e7f6827e2cd9b/RUPES%20%E3%82%BF%E3%82%99%E3%83%95%E3%82%99%E3%83%AB%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%9B%E3%82%9A%E3%83%AA%E3%83%83%E3%82%B7%E3%83%A3%E3%83%BC%20%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BF%E3%83%BC%E3%82%BB%E3%83%83%E3%83%88%20LHR15-MK3-SET%20%E3%83%AB%E3%81%B8%E3%82%9A%E3%82%B9%20%E8%87%AA%E5%8B%95%E8%BB%8A%20%E7%A0%94%E7%A3%A8%20%E3%83%8F%E3%82%99%E3%83%95%20%E3%82%B3%E3%83%B3%E3%83%8F%E3%82%9A%E3%82%A6%E3%83%B3%E3%83%88%E3%82%99%20%E9%9B%BB%E5%8B%95%E5%B7%A5%E5%85%B7.png" alt="POLISHING">
+        </div>
+        <h3>02 下地施工を選択</h3>
+        <div class="option" onclick="select('polish','Light')">
+            <span class="price" id="p1"></span>Light
+            <div class="desc">研磨1工程：新車など状態が良いお車の艶出しに。</div>
+        </div>
+        <div class="option" onclick="select('polish','Standard')">
+            <div class="rec-tag">RECOMMEND</div>
+            <span class="price" id="p2"></span>★Standard
+            <div class="desc">研磨2工程：水垢や軽微な小傷を除去し、本来の輝きへ。</div>
+        </div>
+        <div class="option" onclick="select('polish','Premium')">
+            <span class="price" id="p3"></span>Premium
+            <div class="desc">研磨3工程：深い傷の処理から鏡面仕上げまで行う最高峰研磨。</div>
+        </div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
 
     <div class="step" id="step3">
-        <h3>03 コーティング（税込）を選択</h3>
+        <div class="visual-frame">
+            <img src="https://raw.githubusercontent.com/caspremiumcardetailing/C.A.S2/main/%E3%82%AB%E3%83%BC%E3%83%92%E3%82%99%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%BC%E3%83%95%E3%82%9A%E3%83%AD%E3%81%8B%E3%82%99%E8%A1%8C%E3%81%AA%E3%81%86%E3%80%8C%E3%83%95%E3%82%9A%E3%83%AD%E3%82%AB%E3%82%99%E3%83%A9%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%AF%E3%82%99%E3%80%8D%20%E6%9C%AC%E5%BD%93%E3%81%AB%E3%82%AD%E3%83%AC%E3%82%A4%E3%81%AA%E8%89%B6%E3%81%AF%E3%81%93%E3%81%86%E3%81%97%E3%81%A6%E4%BD%9C%E3%82%89%E3%82%8C%E3%82%8B%20-%20Car%20Watch%5BSponsored%5D.png" alt="COATING">
+        </div>
+        <h3>03 コーティングを選択</h3>
         <div class="option" onclick="select('coat','Basic')">
             <span class="price" id="c1"></span>Basic
-            <div class="desc">ガラス</div>
+            <div class="desc">ガラス：標準的なガラスコーティング。高い防汚性を発揮。</div>
         </div>
         <div class="option" onclick="select('coat','Standard')">
+            <div class="rec-tag">RECOMMEND</div>
             <span class="price" id="c2"></span>★Standard
-            <div class="desc">セラミック</div>
+            <div class="desc">セラミック：圧倒的な被膜の硬度と艶。長期保護に最適。</div>
         </div>
         <div class="option" onclick="select('coat','Premium')">
             <span class="price" id="c3"></span>Premium
-            <div class="desc">セラミック2層</div>
+            <div class="desc">セラミック2層：2層構造により、更なる膜厚感と輝きを実現。</div>
         </div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
@@ -122,7 +148,6 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 </div>
 
 <script>
-// 画像の価格表に基づいたデータ
 const price = {
     polish: {
         Light:    { S:16500, M:18700, L:20900, '2L':23100, '3L':25300, '4L':27500 },
@@ -136,36 +161,24 @@ const price = {
     }
 };
 
-let sel = { size:'S', polish:'Light', coat:'Basic' };
+let sel = { size:'S', polish:'Standard', coat:'Standard' };
 
-// 自動サイズ計算
 function autoCalcSize() {
     const l = parseFloat(document.getElementById('vL').value) || 0;
     const w = parseFloat(document.getElementById('vW').value) || 0;
     const h = parseFloat(document.getElementById('vH').value) || 0;
-    
-    // 体積計算 (m3)
     const vol = (l * w * h) / 1000000;
     document.getElementById('volRes').innerText = vol.toFixed(2);
 
     let detectedSize = "S";
-    if (vol === 0) {
-        detectedSize = "S";
-    } else if (vol < 10.5) {
-        detectedSize = "M";
-    } else if (vol < 12.3) {
-        detectedSize = "L";
-    } else if (vol < 14.0) {
-        detectedSize = "2L";
-    } else if (vol < 17.0) {
-        detectedSize = "3L";
-    } else {
-        detectedSize = "4L";
-    }
+    if (vol > 0 && vol < 10.5) detectedSize = "M";
+    else if (vol >= 10.5 && vol < 12.3) detectedSize = "L";
+    else if (vol >= 12.3 && vol < 14.0) detectedSize = "2L";
+    else if (vol >= 14.0 && vol < 17.0) detectedSize = "3L";
+    else if (vol >= 17.0) detectedSize = "4L";
 
-    document.getElementById('sizeRes').innerText = detectedSize + "サイズに該当します";
+    document.getElementById('sizeRes').innerText = detectedSize + "サイズ";
     
-    // UI反映
     const opts = document.querySelectorAll('#sizeOptions .option');
     opts.forEach(opt => {
         if(opt.getAttribute('data-size') === detectedSize) {
@@ -179,7 +192,6 @@ function select(type, val) {
     const container = event.currentTarget.parentElement;
     container.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
     event.currentTarget.classList.add('selected');
-    
     if(type === "size") updatePrices();
     calc();
 }
@@ -196,13 +208,11 @@ function updatePrices() {
 
 function calc() {
     const display = document.getElementById('totalDisplay');
-    const badge = document.getElementById('importBadge');
     const isImport = document.getElementById('importCheck').checked;
-
     let t = price.polish[sel.polish][sel.size] + price.coat[sel.coat][sel.size];
     if(isImport) t = Math.floor(t * 1.2);
     display.innerText = t.toLocaleString();
-    badge.style.display = isImport ? "block" : "none";
+    document.getElementById('importBadge').style.display = isImport ? "block" : "none";
 }
 
 function move(n) {
@@ -226,10 +236,10 @@ function sendLine() {
 window.onload = () => {
     updatePrices();
     calc();
-    // 初期選択状態の付与
+    // デフォルトでStandardを選択状態にする
     document.querySelectorAll('.step').forEach(step => {
-        const firstOpt = step.querySelector('.option');
-        if(firstOpt) firstOpt.classList.add('selected');
+        const target = step.querySelector('.option[onclick*="Standard"]') || step.querySelector('.option');
+        if(target) target.click();
     });
 };
 </script>
