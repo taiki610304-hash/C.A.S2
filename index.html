@@ -19,7 +19,6 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 .calc-result { margin-top:15px; padding:10px; background:#222; border-radius:8px; text-align:center; border-left:4px solid var(--accent); }
 .vol-num { font-size:1.2em; font-weight:bold; color:var(--accent); }
 
-/* スイッチ共通 */
 .toggle-option { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #333; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; }
 .toggle-option.gold { border-color: var(--gold); }
 .toggle-option.pink { border-color: var(--newcar); }
@@ -33,10 +32,13 @@ input:checked + .slider-btn:before { transform:translateX(24px); }
 
 .option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition:0.2s; position:relative; }
 .option.selected{ border:1px solid var(--accent); background:#16213e; }
-.price{ float:right; color:var(--accent); font-weight:bold; }
-.new-price{ float:right; color:var(--newcar); font-weight:bold; }
+.price-container { float:right; text-align:right; }
+.old-price { color:var(--sub); text-decoration:line-through; font-size:0.85em; display:block; }
+.new-price { color:var(--newcar); font-weight:bold; display:block; }
+.price{ color:var(--accent); font-weight:bold; }
 .desc{ font-size:0.8em; color:#aaa; margin-top:6px; line-height:1.4; }
 .rec-tag { position:absolute; top:-10px; right:10px; background:var(--recommend); color:#fff; font-size:0.75em; padding:3px 10px; border-radius:4px; font-weight:bold; z-index:1; }
+
 button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
 .next{background:var(--accent);color:#fff;}
 .prev{background:#222;color:#aaa;}
@@ -101,7 +103,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>03 コーティングを選択</h3>
         <div class="option" onclick="select('coat','Basic')"><span class="price" id="c1">¥0</span>Basic<div class="desc">ガラス：標準的な保護。</div></div>
         <div class="option" onclick="select('coat','Standard')"><div class="rec-tag">オススメ</div><span class="price" id="c2">¥0</span>Standard<div class="desc">セラミック：圧倒的な艶と硬度。</div></div>
-        <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc">セラミック2層：最高峰の膜厚。</div></div>
+        <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc">セラミック2層：最高峰の膜厚感。</div></div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
     </div>
@@ -109,15 +111,20 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step4">
         <h3>04 オプションを選択</h3>
         <div class="option" onclick="toggleOption('suv_pack')">
-            <div class="rec-tag">人気</div><span class="price" id="o_suv"></span>SUVパッケージ
+            <div class="rec-tag">人気</div>
+            <div class="price-container" id="o_suv_area"></div>
+            SUVパッケージ
             <div class="desc">樹脂パーツコート + 窓ガラス研磨コート(前)</div>
         </div>
         <div id="optList">
-            <div class="option" onclick="toggleOption('resin')"><span class="price" id="o_resin"></span>樹脂パーツコート</div>
-            <div class="option" onclick="toggleOption('glass_front')"><span class="price" id="o_gf"></span>窓ガラス研磨コート(前)</div>
-            <div class="option" onclick="toggleOption('glass_all')"><span class="price" id="o_ga"></span>窓ガラス研磨コート(全面)</div>
-            <div class="option" onclick="toggleOption('headlight')"><span class="price" id="o_hl"></span>ヘッドライト研磨+コート</div>
-            <div class="option" onclick="toggleOption('interior')"><span class="price" id="o_in"></span>内装コーティング</div>
+            <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート</div>
+            <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)</div>
+            <div class="option" onclick="toggleOption('glass_all')"><div class="price-container" id="o_ga_area"></div>窓ガラス研磨コート(全面)</div>
+            <div class="option" onclick="toggleOption('headlight')">
+                <div class="price-container" id="o_hl_area"></div>
+                <span id="hl_title">ヘッドライト研磨+コート</span>
+            </div>
+            <div class="option" onclick="toggleOption('interior')"><div class="price-container" id="o_in_area"></div>内装コーティング</div>
         </div>
         <button class="prev" onclick="move(3)">戻る</button>
         <button class="next" onclick="move(5)">最終確認へ</button>
@@ -211,7 +218,7 @@ function updatePrices() {
     if(!s) return;
     const isNew = document.getElementById('newcarCheck').checked;
     
-    // 基本料金は不変
+    // 基本料金
     document.getElementById('p1').innerText = "¥" + price.polish.Light[s].toLocaleString();
     document.getElementById('p2').innerText = "¥" + price.polish.Standard[s].toLocaleString();
     document.getElementById('p3').innerText = "¥" + price.polish.Premium[s].toLocaleString();
@@ -219,23 +226,34 @@ function updatePrices() {
     document.getElementById('c2').innerText = "¥" + price.coat.Standard[s].toLocaleString();
     document.getElementById('c3').innerText = "¥" + price.coat.Premium[s].toLocaleString();
     
-    // オプション料金に割引を適用して表示
-    const getOptP = (id) => {
-        let p = price.opts[id][s];
-        if(isNew) {
-            p = (id === 'suv_pack') ? 15000 : Math.floor(p * 0.8);
-        }
-        return "¥" + p.toLocaleString();
-    };
+    // オプション表示の更新
+    updateOptionDisplay('o_suv_area', 'suv_pack', s, isNew);
+    updateOptionDisplay('o_resin_area', 'resin', s, isNew);
+    updateOptionDisplay('o_gf_area', 'glass_front', s, isNew);
+    updateOptionDisplay('o_ga_area', 'glass_all', s, isNew);
+    updateOptionDisplay('o_hl_area', 'headlight', s, isNew);
+    updateOptionDisplay('o_in_area', 'interior', s, isNew);
 
-    document.getElementById('o_suv').innerText = getOptP('suv_pack');
-    document.getElementById('o_resin').innerText = "+ " + getOptP('resin');
-    document.getElementById('o_gf').innerText = "+ " + getOptP('glass_front');
-    document.getElementById('o_ga').innerText = "+ " + getOptP('glass_all');
-    document.getElementById('o_hl').innerText = "+ " + getOptP('headlight');
-    document.getElementById('o_in').innerText = "+ " + getOptP('interior');
+    // ヘッドライトタイトルの切り替え
+    document.getElementById('hl_title').innerText = isNew ? "ヘッドライトコーティングのみ" : "ヘッドライト研磨+コート";
     
     document.getElementById('maintPrice').innerText = price.maint[s].toLocaleString();
+}
+
+function updateOptionDisplay(elementId, optId, size, isNew) {
+    const area = document.getElementById(elementId);
+    let original = price.opts[optId][size];
+    let discounted = original;
+
+    if(isNew) {
+        if(optId === 'suv_pack') discounted = 15000;
+        else if(optId === 'headlight') discounted = Math.floor(original / 2);
+        else discounted = Math.floor(original * 0.8);
+
+        area.innerHTML = `<span class="old-price">¥${original.toLocaleString()}</span><span class="new-price">¥${discounted.toLocaleString()}</span>`;
+    } else {
+        area.innerHTML = `<span class="price">¥${original.toLocaleString()}</span>`;
+    }
 }
 
 function calc() {
@@ -251,7 +269,11 @@ function calc() {
     let optTotal = 0;
     sel.options.forEach(id => { 
         let p = price.opts[id][sel.size];
-        if(isNew) p = (id === 'suv_pack') ? 15000 : Math.floor(p * 0.8);
+        if(isNew) {
+            if(id === 'suv_pack') p = 15000;
+            else if(id === 'headlight') p = Math.floor(p / 2);
+            else p = Math.floor(p * 0.8);
+        }
         optTotal += p; 
     });
     
@@ -269,9 +291,10 @@ function move(n) {
 
 function sendLine() {
     const isImport = document.getElementById('importCheck').checked ? "輸入車" : "国産車";
-    const isNew = document.getElementById('newcarCheck').checked ? "新車割引適用" : "通常";
+    const isNew = document.getElementById('newcarCheck').checked ? "新車" : "経年車";
     const msg = `【見積依頼】\n区分: ${isImport} / ${isNew}\nサイズ: ${sel.size}\n下地: ${sel.polish || '未選択'}\nコート: ${sel.coat || '未選択'}\nオプション: ${sel.options.join(', ')}\n合計: ¥${document.getElementById('totalDisplay').innerText}`;
     window.location.href = `https://line.me/R/oaMessage/@009zapmx/?${encodeURIComponent(msg)}`;
 }
 </script>
 </body>
+</html>
