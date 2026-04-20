@@ -25,7 +25,7 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 .toggle-option.disabled { opacity: 0.5; }
 .toggle-option.disabled label { pointer-events: none; }
 
-.newcar-msg { color: var(--newcar); font-size: 0.75em; font-weight: bold; margin-top: 4px; display: none; } /* 新車特典メッセージ */
+.newcar-msg { color: var(--newcar); font-size: 0.75em; font-weight: bold; margin-top: 4px; display: none; }
 
 .switch { position:relative; display:inline-block; width:50px; height:26px; }
 .switch input { opacity:0; width:0; height:0; }
@@ -76,7 +76,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <div class="toggle-option gold" id="importToggleWrap">
             <div>
                 <strong>輸入車（外車）</strong>
-                <div style="font-size:0.7em; color:var(--sub);">※全体額の +20% 加算</div>
+                <div style="font-size:0.7em; color:var(--sub);">※経年車の場合のみ全体額の +20% 加算</div>
                 <div id="newcarImportMsg" class="newcar-msg">【新車特典】輸入車割増はかかりません</div>
             </div>
             <label class="switch"><input type="checkbox" id="importCheck" onchange="calc()"><span class="slider-btn"></span></label>
@@ -99,23 +99,47 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
             <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ</div>
             <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ</div>
         </div>
-        <button class="next" onclick="move(2)">下地研磨の選択へ</button>
+        <button class="next" onclick="move(2)">仕上がりの艶を選択へ</button>
     </div>
 
     <div class="step" id="step2">
-        <h3>02 下地施工を選択</h3>
-        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">研磨1工程：新車の艶出しに。</div></div>
-        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">研磨2工程：水垢や軽微な小傷を除去。</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">研磨3工程：鏡面仕上げまで。</div></div>
+        <h3>02 仕上がりの艶（下地研磨）を選択</h3>
+        <div class="option" onclick="select('polish','Light')">
+            <span class="price" id="p1">¥0</span>
+            Light
+            <div class="desc">【新車・低走行車向け】曇りを取り除き、コーティングの密着性を高める軽研磨です。</div>
+        </div>
+        <div class="option" onclick="select('polish','Standard')">
+            <span class="price" id="p2">¥0</span>
+            Standard
+            <div class="desc">【オススメ】経年車、中古車に。洗車傷や水垢を除去し、塗装本来の輝きを呼び戻します。</div>
+        </div>
+        <div class="option" onclick="select('polish','Premium')">
+            <span class="price" id="p3">¥0</span>
+            Premium
+            <div class="desc">【最高品質】細かな傷まで徹底的に追い込み、鏡のような映り込みを実現する精密研磨です。</div>
+        </div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
 
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
-        <div class="option" onclick="select('coat','Basic')"><span class="price" id="c1">¥0</span>Basic<div class="desc">ガラス：標準的な保護。</div></div>
-        <div class="option" onclick="select('coat','Standard')"><span class="price" id="c2">¥0</span>Standard<div class="desc">セラミック：圧倒的な艶と硬度。</div></div>
-        <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc">セラミック2層：最高峰の膜厚感。</div></div>
+        <div class="option" onclick="select('coat','Basic')">
+            <span class="price" id="c1">¥0</span>
+            Basic
+            <div class="desc">【コスト重視】ガラスコーティング。標準的な保護性能を備えたメニューです。</div>
+        </div>
+        <div class="option" onclick="select('coat','Standard')">
+            <span class="price" id="c2">¥0</span>
+            Standard
+            <div class="desc">【CAS推奨】高耐久セラミック。厚い被膜で深い艶と圧倒的な撥水性を実現します。</div>
+        </div>
+        <div class="option" onclick="select('coat','Premium')">
+            <span class="price" id="c3">¥0</span>
+            Premium
+            <div class="desc">【最高峰】2層セラミック。セラミックを贅沢に重ね、異次元の膜厚感と保護能力を発揮します。</div>
+        </div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
     </div>
