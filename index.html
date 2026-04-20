@@ -42,7 +42,7 @@ input:checked + .slider-btn:before { transform:translateX(24px); }
 .old-price { color:var(--sub); text-decoration:line-through; font-size:0.85em; display:block; }
 .new-price { color:var(--newcar); font-weight:bold; display:block; }
 .desc{ font-size:0.8em; color:#aaa; margin-top:6px; line-height:1.4; }
-.rec-tag { position:absolute; top:-10px; right:10px; background:var(--recommend); color:#fff; font-size:0.75em; padding:3px 10px; border-radius:4px; font-weight:bold; z-index:1; }
+.info-box { background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold); padding: 10px; margin-bottom: 15px; font-size: 0.85em; color: #eee; line-height: 1.5; }
 
 button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
 .next{background:var(--accent);color:#fff;}
@@ -66,19 +66,12 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>01 車種サイズを選択</h3>
         
         <div class="toggle-option pink">
-            <div>
-                <strong>新車割引</strong>
-                <div style="font-size:0.7em; color:var(--sub);">※納車1ヶ月以内：オプション割引等</div>
-            </div>
+            <div><strong>新車割引</strong><div style="font-size:0.7em; color:var(--sub);">※納車1ヶ月以内：オプション割引等</div></div>
             <label class="switch"><input type="checkbox" id="newcarCheck" class="newcar-switch" onchange="toggleNewCarEffect();"><span class="slider-btn"></span></label>
         </div>
 
         <div class="toggle-option gold" id="importToggleWrap">
-            <div>
-                <strong>輸入車（外車）</strong>
-                <div style="font-size:0.7em; color:var(--sub);">※経年車の場合のみ全体額の +20% 加算</div>
-                <div id="newcarImportMsg" class="newcar-msg">【新車特典】輸入車割増はかかりません</div>
-            </div>
+            <div><strong>輸入車（外車）</strong><div style="font-size:0.7em; color:var(--sub);">※経年車の場合のみ全体額の +20% 加算</div><div id="newcarImportMsg" class="newcar-msg">【新車特典】輸入車割増はかかりません</div></div>
             <label class="switch"><input type="checkbox" id="importCheck" onchange="calc()"><span class="slider-btn"></span></label>
         </div>
 
@@ -99,25 +92,29 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
             <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ</div>
             <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ</div>
         </div>
-        <button class="next" onclick="move(2)">仕上がりの艶を選択へ</button>
+        <button class="next" onclick="move(2)">下地処理を選択へ</button>
     </div>
 
     <div class="step" id="step2">
-        <h3>02 仕上がりの艶（下地研磨）を選択</h3>
+        <h3>02 下地処理（研磨）を選択</h3>
+        <div class="info-box">
+            <strong>下地処理とは？</strong><br>
+            塗装表面の汚れや微細な傷を研磨で取り除く工程です。これを丁寧に行うことで、コーティングが塗装と強く密着し、深い艶と耐久性が生まれます。
+        </div>
         <div class="option" onclick="select('polish','Light')">
             <span class="price" id="p1">¥0</span>
             Light
-            <div class="desc">【新車・低走行車向け】曇りを取り除き、コーティングの密着性を高める軽研磨です。</div>
+            <div class="desc">【新車・低走行車向け】塗装表面の曇りを取り除き、コーティングの定着を高める軽研磨です。</div>
         </div>
         <div class="option" onclick="select('polish','Standard')">
             <span class="price" id="p2">¥0</span>
             Standard
-            <div class="desc">【オススメ】経年車、中古車に。洗車傷や水垢を除去し、塗装本来の輝きを呼び戻します。</div>
+            <div class="desc">【オススメ】経年車、中古車に。洗車傷や水垢をスッキリ除去し、本来の輝きを呼び戻します。</div>
         </div>
         <div class="option" onclick="select('polish','Premium')">
             <span class="price" id="p3">¥0</span>
             Premium
-            <div class="desc">【最高品質】細かな傷まで徹底的に追い込み、鏡のような映り込みを実現する精密研磨です。</div>
+            <div class="desc">【最高品質】徹底的に傷を追い込み、鏡のような映り込みを実現する精密研磨です。</div>
         </div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
@@ -128,12 +125,12 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <div class="option" onclick="select('coat','Basic')">
             <span class="price" id="c1">¥0</span>
             Basic
-            <div class="desc">【コスト重視】ガラスコーティング。標準的な保護性能を備えたメニューです。</div>
+            <div class="desc">【コスト重視】ガラスコーティング。標準的な保護性能を備えたスタンダードなメニューです。</div>
         </div>
         <div class="option" onclick="select('coat','Standard')">
             <span class="price" id="c2">¥0</span>
             Standard
-            <div class="desc">【CAS推奨】高耐久セラミック。厚い被膜で深い艶と圧倒的な撥水性を実現します。</div>
+            <div class="desc">【CAS推奨】高耐久セラミック。厚い被膜で深い艶と圧倒的な撥水性を実現。洗車が楽になります。</div>
         </div>
         <div class="option" onclick="select('coat','Premium')">
             <span class="price" id="c3">¥0</span>
@@ -156,10 +153,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
             <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート</div>
             <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)</div>
             <div class="option" onclick="toggleOption('glass_all')"><div class="price-container" id="o_ga_area"></div>窓ガラス研磨コート(全面)</div>
-            <div class="option" onclick="toggleOption('headlight')">
-                <div class="price-container" id="o_hl_area"></div>
-                <span id="hl_title">ヘッドライト研磨+コート</span>
-            </div>
+            <div class="option" onclick="toggleOption('headlight')"><div class="price-container" id="o_hl_area"></div><span id="hl_title">ヘッドライト研磨+コート</span></div>
             <div class="option" onclick="toggleOption('interior')"><div class="price-container" id="o_in_area"></div>内装コーティング</div>
         </div>
         <button class="prev" onclick="move(3)">戻る</button>
@@ -169,9 +163,13 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step5">
         <h3>05 メンテナンス（参考）</h3>
         <div class="calc-tool">
-            <div style="color:var(--gold); font-weight:bold;">次回以降のメンテナンス費用</div>
+            <div style="color:var(--gold); font-weight:bold; margin-bottom:8px;">定期メンテナンスのご案内</div>
+            <div class="desc" style="color:#eee; font-size:0.85em; margin-bottom:15px; border-left:2px solid var(--gold); padding-left:10px;">
+                専用ケミカルでの洗車、固着した汚れ（ミネラル・鉄粉）の除去、トップコートの補充を行い、撥水と艶を復活させます。
+            </div>
+            <div style="color:var(--gold); font-weight:bold;">次回以降の施工費用</div>
             <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
-            <div class="desc">※半年〜1年推奨。</div>
+            <div class="desc">※半年〜1年ごとの施工を推奨しております。</div>
         </div>
         <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
         <button class="prev" onclick="move(4)">修正する</button>
@@ -187,8 +185,8 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 </div>
 
 <script>
+// (以下JavaScript部分は前回と同様のロジックを保持)
 const tax = (price) => Math.floor(price * 1.1);
-
 const priceEx = {
     polish: {
         Light:    { S:15000, M:17000, L:19000, '2L':21000, '3L':23000, '4L':25000 },
@@ -256,7 +254,6 @@ function toggleNewCarEffect() {
     const importWrap = document.getElementById('importToggleWrap');
     const importCheck = document.getElementById('importCheck');
     const msg = document.getElementById('newcarImportMsg');
-
     if(isNew) {
         importCheck.checked = false; 
         importWrap.classList.add('disabled');
@@ -277,21 +274,18 @@ function updatePrices() {
     let s = sel.size;
     if(!s) return;
     const isNew = document.getElementById('newcarCheck').checked;
-    
     document.getElementById('p1').innerText = "¥" + tax(priceEx.polish.Light[s]).toLocaleString();
     document.getElementById('p2').innerText = "¥" + tax(priceEx.polish.Standard[s]).toLocaleString();
     document.getElementById('p3').innerText = "¥" + tax(priceEx.polish.Premium[s]).toLocaleString();
     document.getElementById('c1').innerText = "¥" + tax(priceEx.coat.Basic[s]).toLocaleString();
     document.getElementById('c2').innerText = "¥" + tax(priceEx.coat.Standard[s]).toLocaleString();
     document.getElementById('c3').innerText = "¥" + tax(priceEx.coat.Premium[s]).toLocaleString();
-    
     updateOptionDisplay('o_cas_area', 'cas_std', s, isNew);
     updateOptionDisplay('o_resin_area', 'resin', s, isNew);
     updateOptionDisplay('o_gf_area', 'glass_front', s, isNew);
     updateOptionDisplay('o_ga_area', 'glass_all', s, isNew);
     updateOptionDisplay('o_hl_area', 'headlight', s, isNew);
     updateOptionDisplay('o_in_area', 'interior', s, isNew);
-
     document.getElementById('hl_title').innerText = isNew ? "ヘッドライトコート" : "ヘッドライト研磨+コート";
     document.getElementById('maintPrice').innerText = tax(priceEx.maint[s]).toLocaleString();
 }
@@ -300,7 +294,6 @@ function updateOptionDisplay(elementId, optId, size, isNew) {
     const area = document.getElementById(elementId);
     let originalEx = (optId === 'cas_std') ? getStdPackEx(size) : priceEx.opts[optId][size];
     let discountedEx = originalEx;
-
     if(isNew) {
         if(optId === 'headlight') discountedEx = originalEx / 2;
         else discountedEx = originalEx * 0.8; 
@@ -314,13 +307,10 @@ function calc() {
     if(!sel.size) return;
     const isNew = document.getElementById('newcarCheck').checked;
     const isImport = !isNew && document.getElementById('importCheck').checked; 
-    
     let polishEx = sel.polish ? priceEx.polish[sel.polish][sel.size] : 0;
     let coatEx = sel.coat ? priceEx.coat[sel.coat][sel.size] : 0;
     let baseEx = polishEx + coatEx;
-    
     if(isImport) baseEx = baseEx * 1.2;
-    
     let optTotalEx = 0;
     sel.options.forEach(id => { 
         let pEx = (id === 'cas_std') ? getStdPackEx(sel.size) : priceEx.opts[id][sel.size];
@@ -330,7 +320,6 @@ function calc() {
         }
         optTotalEx += pEx; 
     });
-    
     document.getElementById('totalDisplay').innerText = tax(baseEx + optTotalEx).toLocaleString();
     document.getElementById('importBadge').style.display = isImport ? "block" : "none";
     document.getElementById('newcarBadge').style.display = isNew ? "block" : "none";
