@@ -93,7 +93,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step2">
         <h3>02 下地施工を選択</h3>
         <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">研磨1工程：新車の艶出しに。</div></div>
-        <div class="option" onclick="select('polish','Standard')"><div class="rec-tag">オススメ</div><span class="price" id="p2">¥0</span>Standard<div class="desc">研磨2工程：水垢や軽微な小傷を除去。</div></div>
+        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">研磨2工程：水垢や軽微な小傷を除去。</div></div>
         <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">研磨3工程：鏡面仕上げまで。</div></div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
@@ -102,7 +102,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
         <div class="option" onclick="select('coat','Basic')"><span class="price" id="c1">¥0</span>Basic<div class="desc">ガラス：標準的な保護。</div></div>
-        <div class="option" onclick="select('coat','Standard')"><div class="rec-tag">オススメ</div><span class="price" id="c2">¥0</span>Standard<div class="desc">セラミック：圧倒的な艶と硬度。</div></div>
+        <div class="option" onclick="select('coat','Standard')"><span class="price" id="c2">¥0</span>Standard<div class="desc">セラミック：圧倒的な艶と硬度。</div></div>
         <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc">セラミック2層：最高峰の膜厚感。</div></div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
@@ -151,7 +151,6 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 </div>
 
 <script>
-// 税抜価格をベースに1.1倍(税込)を計算する関数
 const tax = (price) => Math.floor(price * 1.1);
 
 const priceEx = {
@@ -208,7 +207,6 @@ function select(type, val) {
 function toggleOption(id) {
     if (sel.options.includes(id)) {
         sel.options = sel.options.filter(o => o !== id);
-        event.currentTarget.classList.remove('removeSelected');
         event.currentTarget.classList.remove('selected');
     } else {
         sel.options.push(id);
@@ -246,7 +244,7 @@ function updateOptionDisplay(elementId, optId, size, isNew) {
     let discountedEx = originalEx;
 
     if(isNew) {
-        if(optId === 'suv_pack') discountedEx = 13000; // 税抜キリ番
+        if(optId === 'suv_pack') discountedEx = 13000;
         else if(optId === 'headlight') discountedEx = originalEx / 2;
         else discountedEx = originalEx * 0.8;
 
