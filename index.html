@@ -85,12 +85,12 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         </div>
 
         <div id="sizeOptions">
-            <div class="option" data-size="S" onclick="select('size','S')">Sサイズ <small>(〜10.5㎥)</small></div>
-            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ <small>(10.5〜12.2㎥)</small></div>
-            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ <small>(12.2〜14.0㎥)</small></div>
-            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ <small>(14.0〜17.7㎥)</small></div>
-            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ <small>(17.7〜20.6㎥)</small></div>
-            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ <small>(20.6㎥〜)</small></div>
+            <div class="option" data-size="S" onclick="select('size','S')">Sサイズ <small>(軽自動車)</small></div>
+            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ <small>(〜10.5未満)</small></div>
+            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ <small>(10.5〜12.3未満)</small></div>
+            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ <small>(12.3〜14.0未満)</small></div>
+            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ <small>(14.0〜17.0未満)</small></div>
+            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ <small>(17.0〜)</small></div>
         </div>
         <button class="next" onclick="move(2)">下地処理を選択へ</button>
     </div>
@@ -182,16 +182,16 @@ function autoCalcSize() {
     document.getElementById('volRes').innerText = vol.toFixed(2);
     
     let ds = null;
-    if (vol > 0 && vol < 10.5) ds = "S";
-    else if (vol >= 10.5 && vol < 12.2) ds = "M";
-    else if (vol >= 12.2 && vol < 14.0) ds = "L";
-    else if (vol >= 14.0 && vol < 17.7) ds = "2L";
-    else if (vol >= 17.7 && vol < 20.6) ds = "3L";
-    else if (vol >= 20.6) ds = "4L";
+    // 画像の表に基づいた正確な判定
+    if (vol > 0 && vol < 8.0) ds = "S"; // 軽自動車相当の目安
+    else if (vol >= 0 && vol < 10.5) ds = "M";
+    else if (vol >= 10.5 && vol < 12.3) ds = "L";
+    else if (vol >= 12.3 && vol < 14.0) ds = "2L";
+    else if (vol >= 14.0 && vol < 17.0) ds = "3L";
+    else if (vol >= 17.0) ds = "4L";
     
     if(ds) {
         document.getElementById('sizeRes').innerText = ds + "サイズ";
-        // 自動ハイライト
         document.querySelectorAll('#sizeOptions .option').forEach(el => el.classList.remove('selected'));
         const targetOpt = document.querySelector(`#sizeOptions .option[data-size="${ds}"]`);
         if(targetOpt) {
