@@ -77,20 +77,20 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 
         <div class="calc-tool">
             <div class="calc-grid">
-                <div>長さ<input type="number" id="vL" placeholder="470" oninput="autoCalcSize()"></div>
-                <div>幅<input type="number" id="vW" placeholder="170" oninput="autoCalcSize()"></div>
-                <div>高さ<input type="number" id="vH" placeholder="150" oninput="autoCalcSize()"></div>
+                <div>長さ(cm)<input type="number" id="vL" placeholder="470" oninput="autoCalcSize()"></div>
+                <div>幅(cm)<input type="number" id="vW" placeholder="170" oninput="autoCalcSize()"></div>
+                <div>高さ(cm)<input type="number" id="vH" placeholder="150" oninput="autoCalcSize()"></div>
             </div>
             <div class="calc-result">体積: <span id="volRes" class="vol-num">0.00</span> m³ → <span id="sizeRes" style="font-weight:bold; color:var(--gold);">未選択</span></div>
         </div>
 
         <div id="sizeOptions">
-            <div class="option" data-size="S" onclick="select('size','S')">Sサイズ</div>
-            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ</div>
-            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ</div>
-            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ</div>
-            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ</div>
-            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ</div>
+            <div class="option" data-size="S" onclick="select('size','S')">Sサイズ <small>(〜10.5㎥)</small></div>
+            <div class="option" data-size="M" onclick="select('size','M')">Mサイズ <small>(10.5〜12.2㎥)</small></div>
+            <div class="option" data-size="L" onclick="select('size','L')">Lサイズ <small>(12.2〜14.0㎥)</small></div>
+            <div class="option" data-size="2L" onclick="select('size','2L')">2Lサイズ <small>(14.0〜17.7㎥)</small></div>
+            <div class="option" data-size="3L" onclick="select('size','3L')">3Lサイズ <small>(17.7〜20.6㎥)</small></div>
+            <div class="option" data-size="4L" onclick="select('size','4L')">4Lサイズ <small>(20.6㎥〜)</small></div>
         </div>
         <button class="next" onclick="move(2)">下地処理を選択へ</button>
     </div>
@@ -99,56 +99,27 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>02 下地処理（研磨）を選択</h3>
         <div class="info-box">
             <strong>下地処理とは？</strong><br>
-            通常の洗車では落とせない<b>頑固な水垢、油分、ボディのザラつき（鉄粉）</b>を除去し、研磨で塗装面を平滑に整える工程です。この「土台作り」を丁寧に行うことで、コーティングの密着性が高まり、深い艶と耐久性が引き出されます。
+            通常の洗車では落とせない<b>頑固な水垢、油分、ボディのザラつき（鉄粉）</b>を除去し、研磨で塗装面を平滑に整える工程です。
         </div>
-        <div class="option" onclick="select('polish','Light')">
-            <span class="price" id="p1">¥0</span>
-            Light
-            <div class="desc">【新車・低走行車向け】塗装表面の曇りを取り除き、コーティングの定着を高める軽研磨です。</div>
-        </div>
-        <div class="option" onclick="select('polish','Standard')">
-            <span class="price" id="p2">¥0</span>
-            Standard
-            <div class="desc">【オススメ】経年車、中古車に。固着した水垢や洗車傷をスッキリ除去し、塗装本来の輝きを呼び戻します。</div>
-        </div>
-        <div class="option" onclick="select('polish','Premium')">
-            <span class="price" id="p3">¥0</span>
-            Premium
-            <div class="desc">【最高品質】徹底的に傷を追い込み、鏡のような映り込みを実現する精密研磨です。</div>
-        </div>
+        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】軽研磨です。</div></div>
+        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">【オススメ】経年車、中古車に。</div></div>
+        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【最高品質】究極の艶を求める方へ。</div></div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
 
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
-        <div class="option" onclick="select('coat','Basic')">
-            <span class="price" id="c1">¥0</span>
-            Basic
-            <div class="desc">【コスト重視】ガラスコーティング。標準的な保護性能を備えたスタンダードなメニューです。</div>
-        </div>
-        <div class="option" onclick="select('coat','Standard')">
-            <span class="price" id="c2">¥0</span>
-            Standard
-            <div class="desc">【CAS推奨】高耐久セラミック。厚い被膜で深い艶と圧倒的な撥水性を実現。洗車が楽になります。</div>
-        </div>
-        <div class="option" onclick="select('coat','Premium')">
-            <span class="price" id="c3">¥0</span>
-            Premium
-            <div class="desc">【最高峰】2層セラミック。セラミックを贅沢に重ね、異次元の膜厚感と保護能力を発揮します。</div>
-        </div>
+        <div class="option" onclick="select('coat','Basic')"><span class="price" id="c1">¥0</span>Basic<div class="desc">ガラスコーティング</div></div>
+        <div class="option" onclick="select('coat','Standard')"><span class="price" id="c2">¥0</span>Standard<div class="desc">【CAS推奨】高耐久セラミック</div></div>
+        <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc">【最高峰】2層セラミック</div></div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
     </div>
 
     <div class="step" id="step4">
         <h3>04 オプションを選択</h3>
-        <div class="option" onclick="toggleOption('cas_std')">
-            <div class="rec-tag">人気</div>
-            <div class="price-container" id="o_cas_area"></div>
-            C.A.Sスタンダードオプションセット
-            <div class="desc">樹脂パーツコート + 窓ガラス研磨コート(前)</div>
-        </div>
+        <div class="option" onclick="toggleOption('cas_std')"><div class="price-container" id="o_cas_area"></div>C.A.Sスタンダードセット</div>
         <div id="optList">
             <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート</div>
             <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)</div>
@@ -163,13 +134,9 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step5">
         <h3>05 メンテナンス（参考）</h3>
         <div class="calc-tool">
-            <div style="color:var(--gold); font-weight:bold; margin-bottom:8px;">定期メンテナンスのご案内</div>
-            <div class="desc" style="color:#eee; font-size:0.85em; margin-bottom:15px; border-left:2px solid var(--gold); padding-left:10px;">
-                専用ケミカルでの洗車、固着した汚れ（ミネラル・鉄粉）の除去、トップコートの補充を行い、撥水と艶を復活させます。
-            </div>
             <div style="color:var(--gold); font-weight:bold;">次回以降の施工費用</div>
             <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
-            <div class="desc">※半年〜1年ごとの施工を推奨しております。</div>
+            <div class="desc">半年〜1年ごとの施工を推奨しております。</div>
         </div>
         <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
         <button class="prev" onclick="move(4)">修正する</button>
@@ -177,10 +144,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 </div>
 
 <div class="total-panel">
-    <div class="badge-area">
-        <div id="newcarBadge">新車割引適用中</div>
-        <div id="importBadge">輸入車割増適用中</div>
-    </div>
+    <div class="badge-area"><div id="newcarBadge">新車割引適用</div><div id="importBadge">輸入車割増適用</div></div>
     概算合計 ¥<span id="totalDisplay" style="font-size:1.6em; font-weight:bold;">0</span>
 </div>
 
@@ -203,7 +167,7 @@ const priceEx = {
         glass_front: { S:9000, M:10000, L:11000, '2L':12000, '3L':13000, '4L':14000 },
         glass_all: { S:18000, M:19000, L:20000, '2L':21000, '3L':22000, '4L':23000 },
         headlight: { S:12000, M:12000, L:12000, '2L':12000, '3L':12000, '4L':12000 },
-        interior: { S:15000, M:17000, L:19000, '2L':21000, '3L':23000, '4L':25000 } // 2000円刻みに修正
+        interior: { S:15000, M:17000, L:19000, '2L':21000, '3L':23000, '4L':25000 }
     },
     maint: { S:8000, M:9000, L:10000, '2L':11000, '3L':12000, '4L':13000 }
 };
@@ -216,16 +180,28 @@ function autoCalcSize() {
     const h = parseFloat(document.getElementById('vH').value) || 0;
     const vol = (l * w * h) / 1000000;
     document.getElementById('volRes').innerText = vol.toFixed(2);
+    
     let ds = null;
-    if (vol > 0 && vol < 10.5) ds = "M";
-    else if (vol >= 10.5 && vol < 12.3) ds = "L";
-    else if (vol >= 12.3 && vol < 14.0) ds = "2L";
-    else if (vol >= 14.0 && vol < 17.0) ds = "3L";
-    else if (vol >= 17.0) ds = "4L";
+    if (vol > 0 && vol < 10.5) ds = "S";
+    else if (vol >= 10.5 && vol < 12.2) ds = "M";
+    else if (vol >= 12.2 && vol < 14.0) ds = "L";
+    else if (vol >= 14.0 && vol < 17.7) ds = "2L";
+    else if (vol >= 17.7 && vol < 20.6) ds = "3L";
+    else if (vol >= 20.6) ds = "4L";
+    
     if(ds) {
         document.getElementById('sizeRes').innerText = ds + "サイズ";
+        // 自動ハイライト
+        document.querySelectorAll('#sizeOptions .option').forEach(el => el.classList.remove('selected'));
         const targetOpt = document.querySelector(`#sizeOptions .option[data-size="${ds}"]`);
-        if(targetOpt) targetOpt.click();
+        if(targetOpt) {
+            targetOpt.classList.add('selected');
+            sel.size = ds;
+            updatePrices();
+            calc();
+        }
+    } else {
+        document.getElementById('sizeRes').innerText = "未選択";
     }
 }
 
