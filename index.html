@@ -105,7 +105,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>02 下地処理（研磨）を選択</h3>
         <div class="info-box">
             <strong>下地処理とは？</strong><br>
-            通常の洗車では落とせない<b>頑固な水垢、油分、ボディのザラつき（鉄粉）</b>を除去し、高度な研磨技術で塗装面を整える工程です。<b>蓄積した微細なキズを消し去る</b>ことで、コーティングの定着率を劇的に高め、新車以上の艶を実現します。
+            通常の洗車では落とせない<b>頑固な水垢、油分、鉄粉</b>を除去し、高度な研磨技術で塗装面を整える工程です。<b>蓄積した微細なキズを消し去る</b>ことで、コーティングの定着率を劇的に高め、新車以上の艶を実現します。
         </div>
         <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】新車の塗装を活かした軽研磨です。納車時の微細なキズやくすみを取り除き、本来の艶を引き出します。</div></div>
         <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">蓄積した水垢や洗車キズを徹底除去。中古車や経年車が見違えるほどクリアで平滑な塗装面に生まれ変わります。</div></div>
@@ -117,29 +117,29 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
         <div class="info-box">
-            <strong>なぜ安いのか？</strong><br>
-            大手ブランドの看板代や広告費を徹底排除。職人が厳選した「最高級溶剤」を自社仕入れすることで、<b>他店では15〜25万円するクオリティを適正価格で提供</b>しています。
+            <strong>こだわりの「無溶剤セラミック」</strong><br>
+            一般的な溶剤入りコートと違い、乾燥時に成分が蒸発して痩せることがありません。<b>塗った成分が100%ボディに定着</b>するため、圧倒的な「膜厚」と「深い艶」が持続します。
         </div>
         
         <div class="option" onclick="select('coat','Basic')">
             <span class="price" id="c1">¥0</span>Basic
-            <div class="desc">標準的なガラスコーティング。十分な撥水性能と防汚性を備え、日常のお手入れを劇的に楽にします。</div>
+            <div class="desc">標準的なガラスコーティング。十分な撥水性能と防汚性を備え、日常のお手入れを楽にします。</div>
         </div>
         
         <div class="option" onclick="select('coat','Standard')">
             <span class="price" id="c2">¥0</span>Standard
-            <div class="desc">高密度セラミック配合コート。従来のガラスを凌駕する膜厚と硬度で、深い艶と圧倒的な耐薬品性能を発揮します。</div>
+            <div class="desc"><b>高密度・無溶剤セラミック。</b>成分が蒸発せずに固まるため、従来のガラスを凌駕する膜厚と硬度で、深い艶と圧倒的な保護性能を発揮します。</div>
         </div>
         
         <div class="option" onclick="select('coat','Premium')">
             <span class="price" id="c3">¥0</span>Premium
-            <div class="desc">2層構造のセラミック。最高レベルの防汚性と、濡れたような官能的な光沢が長期間持続する贅沢なプランです。</div>
+            <div class="desc"><b>2層構造の無溶剤セラミック。</b>「100%定着」する膜を贅沢に重ねることで、最高レベルの防汚性と、濡れたような官能的な光沢を実現します。</div>
         </div>
 
         <div class="option gold-border" onclick="select('coat','Executive')">
             <div class="pop-badge gold-bg">最高峰</div>
             <span class="price" id="c4">¥0</span>Executive
-            <div class="desc">【究極】セラミックの上を行く「ナノプレミアム」。<b>一般的には15〜25万円（G'ZOXハイモースコート等）</b>とされる最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能です。</div>
+            <div class="desc">【究極】一般的には<b>15〜25万円（G'ZOXハイモースコート等）</b>とされる最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能です。</div>
         </div>
 
         <button class="prev" onclick="move(2)">戻る</button>
@@ -172,7 +172,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <div class="calc-tool">
             <div style="color:var(--gold); font-weight:bold;">次回以降の施工費用</div>
             <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
-            <div class="desc">施工後の美しさを維持するため、半年〜1年ごとの定期メンテナンス（鉄粉・スケール除去等）を推奨しております。</div>
+            <div class="desc">施工後の美しさを維持するため、半年〜1年ごとの定期メンテナンスを推奨しております。</div>
         </div>
         <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
         <button class="prev" onclick="move(4)">修正する</button>
