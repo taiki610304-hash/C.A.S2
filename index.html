@@ -85,18 +85,18 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
             <img src="https://raw.githubusercontent.com/caspremiumcardetailing/C.A.S2/a10f81c68c35a6ab199c85ca53edc9d8f26548de/%E9%81%93%E7%84%A1%E3%81%8D%E6%99%82%E4%BB%A3%E3%82%92%E8%B6%8A%E3%81%88%E3%81%A6%E3%82%86%E3%81%91%E3%80%82%20ALL%20NEW%20LAND%20CRUISER%EF%BC%81.png" alt="C.A.S Visual">
         </div>
         <div class="intro-card">
-            <div class="intro-title">なぜ、高品質を適正価格で提供できるのか？</div>
+            <div class="intro-title">職人直営だから実現できる、本物の品質</div>
             <div class="reason-item">
-                <strong>1. 徹底したコストカット</strong>
-                <p>広告費や店舗維持費を最小限に。その分を高品質な液剤と施工技術に還元し、自信を持って適正価格を提示します。</p>
+                <strong>1. 職人直営による適正価格</strong>
+                <p>受付から施工まで職人が直接一貫対応。営業経費をカットし、施工品質に還元しています。</p>
             </div>
             <div class="reason-item">
-                <strong>2. 直仕入れのこだわり</strong>
-                <p>職人自らテストしたコーティング剤をメーカーから直接調達。中間マージンをカットしています。</p>
+                <strong>2. 直仕入れの液剤へのこだわり</strong>
+                <p>本当に「良い」と確信した液剤をメーカーから直接調達。中間マージンを排除しています。</p>
             </div>
             <div class="reason-item">
-                <strong>3. 安心の事故対応・保証</strong>
-                <p>全プランに施工証明書を発行。万が一の事故の際も、<b>車両保険を適用した再施工</b>が可能です。</p>
+                <strong>3. 安心の施工証明・保証制度</strong>
+                <p>全プラン施工証明書を発行。万が一の事故の際も、<b>車両保険を適用した再施工</b>が可能です。</p>
             </div>
         </div>
         <button class="next" onclick="move(1)">1分見積もりをはじめる</button>
@@ -134,47 +134,31 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 
     <div class="step" id="step2">
         <h3>02 下地処理（研磨）を選択</h3>
-        <div class="info-box">
-            <strong>下地処理とは？</strong><br>
-            通常の洗車では落ちない水垢、油分、鉄粉を徹底除去。研磨で塗装面を整えることで、コーティングの定着率を劇的に高めます。
-        </div>
-        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】軽研磨で微細なキズやくすみを取り除きます。</div></div>
-        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">蓄積した水垢や洗車キズを徹底除去。クリアな塗装面に蘇らせます。</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【鏡面研磨】妥協なくキズを追い求め、最高級の艶を引き出します。</div></div>
+        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】軽研磨で微細なキズを取り除きます。</div></div>
+        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">水垢や洗車キズを徹底除去。クリアな塗装面に蘇らせます。</div></div>
+        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【鏡面研磨】妥協なく最高級の艶を引き出します。</div></div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
 
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
-        <div class="info-box">
-            <strong>安心の全プラン「保証書」発行</strong><br>
-            事故の際、車両保険でコーティングの再施工が受けられるよう「施工証明書」を発行します。
-        </div>
-        
         <div class="option" onclick="select('coat','Basic')">
-            <span class="price" id="c1">¥0</span>
-            Basic <span class="guarantee-tag">[1年保証]</span>
-            <div class="desc">標準的なガラスコーティング。十分な撥水性能と防汚性を備え、日常のお手入れを楽にします。</div>
+            <span class="price" id="c1">¥0</span>Basic <span class="guarantee-tag">[1年保証]</span>
+            <div class="desc">標準的なガラスコーティング。十分な撥水性能と防汚性を備えます。</div>
         </div>
-        
         <div class="option" onclick="select('coat','Standard')">
-            <span class="price" id="c2">¥0</span>
-            Standard <span class="guarantee-tag">[3年保証]</span>
-            <div class="desc"><b>高密度・無溶剤セラミック。</b>成分が蒸発せず100%塗装に定着。従来のガラスを凌駕する圧倒的な膜厚で、深い艶が長期間持続します。</div>
+            <span class="price" id="c2">¥0</span>Standard <span class="guarantee-tag">[3年保証]</span>
+            <div class="desc"><b>高密度・無溶剤セラミック。</b>従来のガラスを凌駕する圧倒的な膜厚。</div>
         </div>
-        
         <div class="option" onclick="select('coat','Premium')">
-            <span class="price" id="c3">¥0</span>
-            Premium <span class="guarantee-tag">[5年保証]</span>
-            <div class="desc"><b>2層構造の無溶剤セラミック。</b>贅沢な2層の膜が最高レベルの防汚性を発揮。濡れたような深い光沢を長く楽しみたい方に。</div>
+            <span class="price" id="c3">¥0</span>Premium <span class="guarantee-tag">[5年保証]</span>
+            <div class="desc"><b>2層構造の無溶剤セラミック。</b>濡れたような深い光沢を長く。</div>
         </div>
-
         <div class="option gold-border" onclick="select('coat','Executive')">
             <div class="pop-badge gold-bg">最高峰</div>
-            <span class="price" id="c4">¥0</span>
-            Executive <span class="guarantee-tag">[5年超保証]</span>
-            <div class="desc"><b>【究極】最高級ポリシラザン2層構造。</b>他店でのG'ZOXハイモースコート等（15〜25万円相当）に匹敵、または凌駕するC.A.S最高ランクの保護性能。熱や紫外線からも塗装を守り抜きます。</div>
+            <span class="price" id="c4">¥0</span>Executive <span class="guarantee-tag">[5年超保証]</span>
+            <div class="desc"><b>【究極】最高級ポリシラザン2層構造。</b>G'ZOXハイモースコート等（15〜25万）を凌駕する保護性能。</div>
         </div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
@@ -182,7 +166,12 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 
     <div class="step" id="step4">
         <h3>04 オプションを選択</h3>
-        <div class="option special-border" onclick="toggleOption('cas_std')"><div class="pop-badge">人気</div><div class="price-container" id="o_cas_area"></div><strong>C.A.Sスタンダードセット</strong><div class="desc">樹脂パーツコート ＋ 窓ガラス研磨コート（前）のお得なセット</div></div>
+        <div class="option special-border" onclick="toggleOption('cas_std')">
+            <div class="pop-badge">セット割引適用</div>
+            <div class="price-container" id="o_cas_area"></div>
+            <strong>C.A.Sスタンダードセット</strong>
+            <div class="desc">樹脂パーツコート ＋ 窓ガラス研磨コート（前）のお得なセット</div>
+        </div>
         <div id="optList">
             <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート</div>
             <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)</div>
@@ -195,25 +184,12 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     </div>
 
     <div class="step" id="step5">
-        <h3>05 アフターケア・保証</h3>
-        <div class="intro-card" style="border-color: var(--accent);">
-            <div class="intro-title" style="color: var(--accent);">プロの定期メンテナンス</div>
-            <div class="desc" style="color:#eee;">
-                保証期間内、半年〜1年ごとの施工で美しい状態を維持し、保証を継続いただけます。
-            </div>
-            <ul class="maint-list">
-                <li><strong>細部洗車</strong>（隙間の汚れまで徹底洗浄）</li>
-                <li><strong>水垢・スケール除去</strong>（艶の低下を防ぐ）</li>
-                <li><strong>鉄粉除去</strong>（ボディのざらつきを解消）</li>
-                <li><strong>専用トップコート施工</strong>（撥水と光沢を復元）</li>
-            </ul>
-        </div>
+        <h3>05 アフターケア</h3>
         <div class="calc-tool">
             <div style="color:var(--gold); font-weight:bold;">定期メンテナンス費用</div>
             <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
             <p style="font-size:0.75em; color:var(--sub); margin-top:10px;">
-                ※全プラン、事故時に保険請求が可能な「施工証明書」を発行。<br>
-                ※保証期間終了後もメンテナンスは有料にて継続可能です。
+                ※全プラン、事故時に保険請求が可能な「施工証明書」を発行。
             </p>
         </div>
         <button class="line-btn" onclick="sendLine()">この内容でLINE相談・予約</button>
@@ -242,7 +218,7 @@ const priceEx = {
     },
     opts: {
         resin: { S:8000, M:9000, L:10000, '2L':11000, '3L':12000, '4L':13000 },
-        glass_front: { S:9000, M:10000, L:11000, '2L':12000, '3L':13000, '4L':14000 },
+        glass_front: { S:9000, M:9500, L:10000, '2L':10500, '3L':11000, '4L':11500 },
         glass_all: { S:18000, M:19000, L:20000, '2L':21000, '3L':22000, '4L':23000 },
         headlight: { S:12000, M:12000, L:12000, '2L':12000, '3L':12000, '4L':12000 },
         interior: { S:15000, M:17000, L:19000, '2L':21000, '3L':23000, '4L':25000 }
@@ -305,6 +281,8 @@ function updatePrices() {
     const isNew = document.getElementById('newcarCheck').checked;
     ['p1','p2','p3'].forEach((id, i) => document.getElementById(id).innerText = "¥" + tax(Object.values(priceEx.polish)[i][s]).toLocaleString());
     ['c1','c2','c3','c4'].forEach((id, i) => document.getElementById(id).innerText = "¥" + tax(Object.values(priceEx.coat)[i][s]).toLocaleString());
+    
+    // オプション価格表示の更新
     updateOptionDisplay('o_cas_area', 'cas_std', s, isNew);
     updateOptionDisplay('o_resin_area', 'resin', s, isNew);
     updateOptionDisplay('o_gf_area', 'glass_front', s, isNew);
@@ -316,7 +294,14 @@ function updatePrices() {
 
 function updateOptionDisplay(elementId, optId, size, isNew) {
     const area = document.getElementById(elementId);
-    let orig = (optId === 'cas_std') ? (priceEx.opts.resin[size] + priceEx.opts.glass_front[size] - 5000) : priceEx.opts[optId][size];
+    let orig;
+    if(optId === 'cas_std') {
+        // スタンダードセット：(樹脂 + 改定後のフロントガラス) - 5000円
+        orig = (priceEx.opts.resin[size] + priceEx.opts.glass_front[size]) - 5000;
+    } else {
+        orig = priceEx.opts[optId][size];
+    }
+
     if(isNew) {
         let disc = (optId === 'headlight') ? orig / 2 : orig * 0.8;
         area.innerHTML = `<span class="old-price">¥${tax(orig).toLocaleString()}</span><span class="new-price">¥${tax(disc).toLocaleString()}</span>`;
@@ -333,7 +318,12 @@ function calc() {
     if(isImport) base *= 1.2;
     let optTotal = 0;
     sel.options.forEach(id => { 
-        let p = (id === 'cas_std') ? (priceEx.opts.resin[sel.size] + priceEx.opts.glass_front[sel.size] - 5000) : priceEx.opts[id][sel.size];
+        let p;
+        if(id === 'cas_std') {
+            p = (priceEx.opts.resin[sel.size] + priceEx.opts.glass_front[sel.size]) - 5000;
+        } else {
+            p = priceEx.opts[id][sel.size];
+        }
         optTotal += isNew ? (id === 'headlight' ? p / 2 : p * 0.8) : p;
     });
     document.getElementById('totalDisplay').innerText = tax(base + optTotal).toLocaleString();
