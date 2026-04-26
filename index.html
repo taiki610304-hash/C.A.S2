@@ -12,7 +12,7 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 .step{display:none;}
 .step.active{display:block;}
 
-/* イントロ用スタイル */
+/* イントロ・カード共通 */
 .intro-card { background:#1a1a1a; padding:20px; border-radius:15px; border:1px solid var(--gold); margin-bottom:20px; }
 .intro-title { color:var(--gold); font-weight:bold; font-size:1.1em; margin-bottom:15px; text-align:center; }
 .reason-item { margin-bottom:15px; border-left:2px solid var(--gold); padding-left:12px; }
@@ -21,6 +21,8 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 
 .visual-frame{ width:100%; height:200px; background:#222; border-radius:12px; margin-bottom:15px; overflow:hidden; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; }
 .visual-frame img{ width:100%; height:100%; object-fit:cover; }
+
+/* ツール・スイッチ */
 .calc-tool { background:#1a1a1a; padding:15px; border-radius:12px; border:1px solid #444; margin-bottom:20px; }
 .calc-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px; }
 .calc-grid input { background:#333; border:1px solid #555; color:#fff; padding:8px; border-radius:5px; width:85%; font-size:16px; }
@@ -32,7 +34,6 @@ h2{ text-align:center; letter-spacing:3px; border-bottom:1px solid #333; padding
 .toggle-option.pink { border-color: var(--newcar); }
 .toggle-option.disabled { opacity: 0.5; }
 .toggle-option.disabled label { pointer-events: none; }
-
 .newcar-msg { color: var(--newcar); font-size: 0.75em; font-weight: bold; margin-top: 4px; display: none; }
 
 .switch { position:relative; display:inline-block; width:50px; height:26px; }
@@ -43,6 +44,7 @@ input:checked + .slider-btn { background-color:var(--gold); }
 input:checked.newcar-switch + .slider-btn { background-color:var(--newcar); }
 input:checked + .slider-btn:before { transform:translateX(24px); }
 
+/* 選択肢 */
 .option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition:0.2s; position:relative; box-sizing: border-box; }
 .option.special-border { border: 1px dashed var(--recommend); } 
 .option.gold-border { border: 1px dashed var(--gold); }
@@ -56,8 +58,11 @@ input:checked + .slider-btn:before { transform:translateX(24px); }
 .old-price { color:var(--sub); text-decoration:line-through; font-size:0.85em; display:block; }
 .new-price { color:var(--newcar); font-weight:bold; display:block; }
 .desc{ font-size:0.8em; color:#aaa; margin-top:6px; line-height:1.4; }
+.guarantee-tag { color: var(--gold); font-size: 0.85em; font-weight: bold; margin-left: 5px; }
+
 .info-box { background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--gold); padding: 12px; margin-bottom: 15px; font-size: 0.85em; color: #eee; line-height: 1.5; border-radius: 4px; }
 
+/* ボタン・パネル */
 button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; }
 .next{background:var(--accent);color:#fff;}
 .prev{background:#222;color:#aaa;}
@@ -66,6 +71,8 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 .badge-area { display:flex; justify-content:center; gap:10px; margin-bottom:5px; font-size:0.75em; font-weight:bold; }
 #importBadge { color:var(--gold); display:none; }
 #newcarBadge { color:var(--newcar); display:none; }
+
+.maint-list { font-size:0.8em; line-height:1.8; color:var(--sub); padding-left:18px; margin:10px 0 0 0; }
 </style>
 </head>
 <body>
@@ -79,39 +86,32 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         </div>
         <div class="intro-card">
             <div class="intro-title">なぜ、高品質を適正価格で提供できるのか？</div>
-            
             <div class="reason-item">
                 <strong>1. 徹底したコストカット</strong>
-                <p>大手ショップのような多額の広告費や固定費を排除。その分、施工価格を抑えてお客様へ還元しています。</p>
+                <p>広告費や店舗維持費を最小限に。その分を高品質な液剤と施工技術に還元し、自信を持って適正価格を提示します。</p>
             </div>
-            
             <div class="reason-item">
-                <strong>2. プロ専用溶剤の「直仕入れ」</strong>
-                <p>職人が自らテストし厳選した「無溶剤セラミック」をメーカーから直接調達。中間マージンをカットしています。</p>
+                <strong>2. 直仕入れのこだわり</strong>
+                <p>職人自らテストしたコーティング剤をメーカーから直接調達。中間マージンをカットしています。</p>
             </div>
-            
             <div class="reason-item">
-                <strong>3. 職人直営のこだわり</strong>
-                <p>受付から施工まで一貫して職人が担当。カジュアルな相談のしやすさと、一切妥協のないクオリティを両立させました。</p>
+                <strong>3. 安心の事故対応・保証</strong>
+                <p>全プランに施工証明書を発行。万が一の事故の際も、<b>車両保険を適用した再施工</b>が可能です。</p>
             </div>
         </div>
-        <p style="font-size:0.85em; text-align:center; color:var(--sub); line-height:1.6;">「本物のコーティングを、もっと身近に。」<br>自信があるからできる、明朗会計の1分見積もりをどうぞ。</p>
         <button class="next" onclick="move(1)">1分見積もりをはじめる</button>
     </div>
 
     <div class="step" id="step1">
         <h3>01 車種サイズを選択</h3>
-        
         <div class="toggle-option pink">
             <div><strong>新車割引</strong><div style="font-size:0.7em; color:var(--sub);">※納車1ヶ月以内：オプション割引等</div></div>
             <label class="switch"><input type="checkbox" id="newcarCheck" class="newcar-switch" onchange="toggleNewCarEffect();"><span class="slider-btn"></span></label>
         </div>
-
         <div class="toggle-option gold" id="importToggleWrap">
             <div><strong>輸入車（外車）</strong><div style="font-size:0.7em; color:var(--sub);">※経年車の場合のみ全体額の +20% 加算</div><div id="newcarImportMsg" class="newcar-msg">【新車特典】輸入車割増はかかりません</div></div>
             <label class="switch"><input type="checkbox" id="importCheck" onchange="calc()"><span class="slider-btn"></span></label>
         </div>
-
         <div class="calc-tool">
             <div class="calc-grid">
                 <div>長さ(cm)<input type="number" id="vL" placeholder="470" oninput="autoCalcSize()"></div>
@@ -120,7 +120,6 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
             </div>
             <div class="calc-result">体積: <span id="volRes" class="vol-num">0.00</span> m³ → <span id="sizeRes" style="font-weight:bold; color:var(--gold);">未選択</span></div>
         </div>
-
         <div id="sizeOptions">
             <div class="option" data-size="S" onclick="select('size','S')">Sサイズ <small>(軽自動車)</small></div>
             <div class="option" data-size="M" onclick="select('size','M')">Mサイズ <small>(〜10.5未満)</small></div>
@@ -137,11 +136,11 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>02 下地処理（研磨）を選択</h3>
         <div class="info-box">
             <strong>下地処理とは？</strong><br>
-            通常の洗車では落とせない<b>頑固な水垢、油分、鉄粉</b>を除去し、高度な研磨技術で塗装面を整える工程です。<b>蓄積した微細なキズを消し去る</b>ことで、コーティングの定着率を劇的に高め、新車以上の艶を実現します。
+            通常の洗車では落ちない水垢、油分、鉄粉を徹底除去。研磨で塗装面を整えることで、コーティングの定着率を劇的に高めます。
         </div>
-        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】新車の塗装を活かした軽研磨です。納車時の微細なキズやくすみを取り除き、本来の艶を引き出します。</div></div>
-        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">蓄積した水垢や洗車キズを徹底除去。中古車や経年車が見違えるほどクリアで平滑な塗装面に生まれ変わります。</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【最高品質】妥協なき鏡面研磨。塗装の厚みを考慮しつつ、極限まで艶を追い求め、キズひとつない深い輝きを追求します。</div></div>
+        <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】軽研磨で微細なキズやくすみを取り除きます。</div></div>
+        <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">蓄積した水垢や洗車キズを徹底除去。クリアな塗装面に蘇らせます。</div></div>
+        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【鏡面研磨】妥協なくキズを追い求め、最高級の艶を引き出します。</div></div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
@@ -149,39 +148,78 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
     <div class="step" id="step3">
         <h3>03 コーティングを選択</h3>
         <div class="info-box">
-            <strong>なぜ安いのか？</strong><br>
-            大手ブランドの看板代や広告費を徹底排除。職人が厳選した「最高級溶剤」を自社仕入れすることで、<b>他店では15〜25万円するクオリティを適正価格で提供</b>しています。
+            <strong>安心の全プラン「保証書」発行</strong><br>
+            車両保険対応の施工証明書を発行します。万が一の事故の際も、保険で再施工が可能です。
         </div>
-        <div class="option" onclick="select('coat','Basic')"><span class="price" id="c1">¥0</span>Basic<div class="desc">標準的なガラスコーティング。十分な撥水性能と防汚性を備え、日常のお手入れを楽にします。</div></div>
-        <div class="option" onclick="select('coat','Standard')"><span class="price" id="c2">¥0</span>Standard<div class="desc"><b>高密度・無溶剤セラミック。</b>成分が蒸発せずに固まるため、従来のガラスを凌駕する膜厚と硬度で、深い艶と圧倒的な保護性能を発揮します。</div></div>
-        <div class="option" onclick="select('coat','Premium')"><span class="price" id="c3">¥0</span>Premium<div class="desc"><b>2層構造の無溶剤セラミック。</b>「成分が100%定着」する膜を贅沢に重ねることで、最高レベルの防汚性と、濡れたような官能的な光沢を実現します。</div></div>
-        <div class="option gold-border" onclick="select('coat','Executive')"><div class="pop-badge gold-bg">最高峰</div><span class="price" id="c4">¥0</span>Executive<div class="desc">【究極】一般的には<b>15〜25万円（G'ZOXハイモースコート等）</b>とされる最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能です。</div></div>
+        
+        <div class="option" onclick="select('coat','Basic')">
+            <span class="price" id="c1">¥0</span>
+            Basic <span class="guarantee-tag">[1年保証]</span>
+            <div class="desc">標準的なガラスコーティング。十分な撥水性能を備えます。</div>
+        </div>
+        
+        <div class="option" onclick="select('coat','Standard')">
+            <span class="price" id="c2">¥0</span>
+            Standard <span class="guarantee-tag">[3年保証]</span>
+            <div class="desc"><b>高密度・無溶剤セラミック。</b>膜厚があり、深い艶が長期間持続します。</div>
+        </div>
+        
+        <div class="option" onclick="select('coat','Premium')">
+            <span class="price" id="c3">¥0</span>
+            Premium <span class="guarantee-tag">[5年保証]</span>
+            <div class="desc"><b>2層構造の無溶剤セラミック。</b>最高レベルの防汚性と官能的な光沢を実現。</div>
+        </div>
+
+        <div class="option gold-border" onclick="select('coat','Executive')">
+            <div class="pop-badge gold-bg">最高峰</div>
+            <span class="price" id="c4">¥0</span>
+            Executive <span class="guarantee-tag">[5年超保証]</span>
+            <div class="desc">【究極】最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能。</div>
+        </div>
         <button class="prev" onclick="move(2)">戻る</button>
         <button class="next" onclick="move(4)">オプション選択へ</button>
     </div>
 
     <div class="step" id="step4">
         <h3>04 オプションを選択</h3>
-        <div class="option special-border" onclick="toggleOption('cas_std')"><div class="pop-badge">人気</div><div class="price-container" id="o_cas_area"></div><strong>C.A.Sスタンダードセット</strong><div class="desc">未塗装樹脂の白ボケを防ぐ樹脂パーツコートと、窓ガラス研磨コート（前）のお得なセットです。</div></div>
+        <div class="option special-border" onclick="toggleOption('cas_std')"><div class="pop-badge">人気</div><div class="price-container" id="o_cas_area"></div><strong>C.A.Sスタンダードセット</strong><div class="desc">樹脂パーツコート ＋ 窓ガラス研磨コート（前）のお得なセット</div></div>
         <div id="optList">
-            <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート<div class="desc">SUV等の未塗装樹脂を黒々と保ちます。</div></div>
-            <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)<div class="desc">フロントガラスの油膜を除去し撥水します。</div></div>
-            <div class="option" onclick="toggleOption('glass_all')"><div class="price-container" id="o_ga_area"></div>窓ガラス研磨コート(全面)<div class="desc">全面のウロコや油膜を除去し撥水します。</div></div>
-            <div class="option" onclick="toggleOption('headlight')"><div class="price-container" id="o_hl_area"></div><span id="hl_title">ヘッドライト研磨+コート</span><div class="desc">黄ばみを除去し、強力に保護します。</div></div>
-            <div class="option" onclick="toggleOption('interior')"><div class="price-container" id="o_in_area"></div>内装コーティング<div class="desc">シートや内張の汚れをガードします。</div></div>
+            <div class="option" onclick="toggleOption('resin')"><div class="price-container" id="o_resin_area"></div>樹脂パーツコート</div>
+            <div class="option" onclick="toggleOption('glass_front')"><div class="price-container" id="o_gf_area"></div>窓ガラス研磨コート(前)</div>
+            <div class="option" onclick="toggleOption('glass_all')"><div class="price-container" id="o_ga_area"></div>窓ガラス研磨コート(全面)</div>
+            <div class="option" onclick="toggleOption('headlight')"><div class="price-container" id="o_hl_area"></div>ヘッドライト研磨+コート</div>
+            <div class="option" onclick="toggleOption('interior')"><div class="price-container" id="o_in_area"></div>内装コーティング</div>
         </div>
         <button class="prev" onclick="move(3)">戻る</button>
-        <button class="next" onclick="move(5)">最終確認へ</button>
+        <button class="next" onclick="move(5)">アフターケア確認へ</button>
     </div>
 
     <div class="step" id="step5">
-        <h3>05 メンテナンス（参考）</h3>
-        <div class="calc-tool">
-            <div style="color:var(--gold); font-weight:bold;">次回以降の施工費用</div>
-            <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
-            <div class="desc">施工後の美しさを維持するため、半年〜1年ごとの定期メンテナンスを推奨しております。</div>
+        <h3>05 アフターケア・保証</h3>
+        
+        <div class="intro-card" style="border-color: var(--accent);">
+            <div class="intro-title" style="color: var(--accent);">プロの定期メンテナンス</div>
+            <div class="desc" style="color:#eee;">
+                保証期間内、半年〜1年ごとの施工で美しい状態を維持し、保証を継続いただけます。
+            </div>
+            <ul class="maint-list">
+                <li><strong>細部洗車</strong>（隙間の汚れまで徹底洗浄）</li>
+                <li><strong>水垢・スケール除去</strong>（艶の低下を防ぐ）</li>
+                <li><strong>鉄粉除去</strong>（ボディのざらつきを解消）</li>
+                <li><strong>専用トップコート施工</strong>（撥水と光沢を復元）</li>
+            </ul>
         </div>
-        <button class="line-btn" onclick="sendLine()">この内容で見積もり確定（LINEへ）</button>
+
+        <div class="calc-tool">
+            <div style="color:var(--gold); font-weight:bold;">定期メンテナンス費用</div>
+            <div style="font-size:1.2em; color:var(--accent);">¥<span id="maintPrice">0</span> <small>(税込)</small></div>
+            <p style="font-size:0.75em; color:var(--sub); margin-top:10px;">
+                ※全プラン、事故時に保険請求が可能な「施工証明書」を発行。<br>
+                ※保証期間終了後もメンテナンスは有料にて継続可能です。
+            </p>
+        </div>
+
+        <button class="line-btn" onclick="sendLine()">この内容でLINE相談・予約</button>
         <button class="prev" onclick="move(4)">修正する</button>
     </div>
 </div>
@@ -193,7 +231,6 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
 
 <script>
 const tax = (price) => Math.floor(price * 1.1);
-
 const priceEx = {
     polish: {
         Light:    { S:15000, M:17000, L:19000, '2L':21000, '3L':23000, '4L':25000 },
@@ -254,13 +291,12 @@ function toggleOption(id) {
 
 function toggleNewCarEffect() {
     const isNew = document.getElementById('newcarCheck').checked;
-    const importWrap = document.getElementById('importToggleWrap');
     if(isNew) {
         document.getElementById('importCheck').checked = false; 
-        importWrap.classList.add('disabled');
+        document.getElementById('importToggleWrap').classList.add('disabled');
         document.getElementById('newcarImportMsg').style.display = "block";
     } else {
-        importWrap.classList.remove('disabled');
+        document.getElementById('importToggleWrap').classList.remove('disabled');
         document.getElementById('newcarImportMsg').style.display = "none";
     }
     updatePrices();
@@ -321,7 +357,7 @@ function move(n) {
 
 function sendLine() {
     const isNew = document.getElementById('newcarCheck').checked;
-    const msg = `【見積依頼】\n区分: ${isNew ? '新車' : '経年車'}\nサイズ: ${sel.size}\n下地: ${sel.polish}\nコート: ${sel.coat}\nオプション: ${sel.options.join(', ') || 'なし'}\n合計: ¥${document.getElementById('totalDisplay').innerText}`;
+    const msg = `【見積依頼】\n区分: ${isNew ? '新車' : '経年車'}\nサイズ: ${sel.size}\n下地: ${sel.polish}\nコート: ${sel.coat}\nオプション: ${sel.options.join(', ') || 'なし'}\n合計: ¥${document.getElementById('totalDisplay').innerText}\n※保険対応証明書希望`;
     window.location.href = `https://line.me/R/oaMessage/@009zapmx/?${encodeURIComponent(msg)}`;
 }
 </script>
