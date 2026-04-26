@@ -35,13 +35,9 @@ input:checked + .slider-btn { background-color:var(--gold); }
 input:checked.newcar-switch + .slider-btn { background-color:var(--newcar); }
 input:checked + .slider-btn:before { transform:translateX(24px); }
 
-/* --- 選択肢のスタイル改善 --- */
 .option{ background:#1a1a1a; padding:15px; margin-bottom:12px; border-radius:12px; border:1px solid #333; cursor:pointer; transition:0.2s; position:relative; box-sizing: border-box; }
-/* 未選択時の特別枠（赤・金）を「点線」や「薄い色」に変更して、選択時と差別化 */
 .option.special-border { border: 1px dashed var(--recommend); } 
 .option.gold-border { border: 1px dashed var(--gold); }
-
-/* 選択された時のスタイル（最優先） */
 .option.selected{ border: 2px solid var(--accent) !important; background:#16213e; }
 
 .pop-badge { position: absolute; top: -10px; left: 10px; background: var(--recommend); color: white; font-size: 0.7em; padding: 2px 8px; border-radius: 4px; font-weight: bold; z-index: 1; }
@@ -109,11 +105,11 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <h3>02 下地処理（研磨）を選択</h3>
         <div class="info-box">
             <strong>下地処理とは？</strong><br>
-            通常の洗車では落とせない<b>頑固な水垢、油分、ボディのザラつき（鉄粉）</b>を除去し、研磨で塗装面を平滑に整える工程です。
+            通常の洗車では落とせない<b>頑固な水垢、油分、ボディのザラつき（鉄粉）</b>を除去し、高度な研磨技術で塗装面を整える工程です。<b>蓄積した微細なキズを消し去る</b>ことで、コーティングの定着率を劇的に高め、新車以上の艶を実現します。
         </div>
         <div class="option" onclick="select('polish','Light')"><span class="price" id="p1">¥0</span>Light<div class="desc">【新車・低走行車向け】新車の塗装を活かした軽研磨です。納車時の微細なキズやくすみを取り除き、本来の艶を引き出します。</div></div>
         <div class="option" onclick="select('polish','Standard')"><span class="price" id="p2">¥0</span>Standard<div class="desc">蓄積した水垢や洗車キズを徹底除去。中古車や経年車が見違えるほどクリアで平滑な塗装面に生まれ変わります。</div></div>
-        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【最高品質】妥協なき鏡面研磨。塗装の厚みを考慮しつつ、極限まで艶を追い求めます。ショーコンディションを求める方へ。</div></div>
+        <div class="option" onclick="select('polish','Premium')"><span class="price" id="p3">¥0</span>Premium<div class="desc">【最高品質】妥協なき鏡面研磨。塗装の厚みを考慮しつつ、極限まで艶を追い求め、キズひとつない深い輝きを追求します。</div></div>
         <button class="prev" onclick="move(1)">戻る</button>
         <button class="next" onclick="move(3)">コーティング選択へ</button>
     </div>
@@ -143,7 +139,7 @@ button{ width:100%; padding:16px; margin-top:10px; border:none; border-radius:10
         <div class="option gold-border" onclick="select('coat','Executive')">
             <div class="pop-badge gold-bg">最高峰</div>
             <span class="price" id="c4">¥0</span>Executive
-            <div class="desc">【究極】セラミックの上を行く「ナノプレミアム」。<b>一般的には15〜25万円（ハイモースコート等）</b>とされる最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能です。</div>
+            <div class="desc">【究極】セラミックの上を行く「ナノプレミアム」。<b>一般的には15〜25万円（G'ZOXハイモースコート等）</b>とされる最高級ポリシラザン2層構造。C.A.S最高ランクの保護性能です。</div>
         </div>
 
         <button class="prev" onclick="move(2)">戻る</button>
@@ -346,17 +342,24 @@ function calc() {
 }
 
 function move(n) {
-    if(n > 1 && !sel.size) { alert("まずはサイズを選択してください"); return; }
+    if(n > 1 && !sel.size) { alert("まずは車種サイズを選択してください。"); return; }
+    if(n > 2 && !sel.polish) { alert("下地処理（研磨）のプランを選択してください。"); return; }
+    if(n > 3 && !sel.coat) { alert("コーティングのプランを選択してください。"); return; }
+    
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById('step' + n).classList.add('active');
     window.scrollTo(0,0);
 }
 
 function sendLine() {
+    if(!sel.size || !sel.polish || !sel.coat) {
+        alert("未選択の項目があります。各ステップを確認してください。");
+        return;
+    }
     const isNew = document.getElementById('newcarCheck').checked;
     const isImport = !isNew && document.getElementById('importCheck').checked ? "輸入車" : "国産車";
     const condition = isNew ? "新車" : "経年車";
-    const msg = `【見積依頼】\n区分: ${isImport} / ${condition}\nサイズ: ${sel.size}\n下地: ${sel.polish || '未選択'}\nコート: ${sel.coat || '未選択'}\nオプション: ${sel.options.join(', ')}\n合計: ¥${document.getElementById('totalDisplay').innerText}`;
+    const msg = `【見積依頼】\n区分: ${isImport} / ${condition}\nサイズ: ${sel.size}\n下地: ${sel.polish}\nコート: ${sel.coat}\nオプション: ${sel.options.join(', ') || 'なし'}\n合計: ¥${document.getElementById('totalDisplay').innerText}`;
     window.location.href = `https://line.me/R/oaMessage/@009zapmx/?${encodeURIComponent(msg)}`;
 }
 </script>
